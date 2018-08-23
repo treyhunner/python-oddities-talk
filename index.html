@@ -1,0 +1,1035 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Python Oddities Explained</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/truthful.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/github.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+      <section>
+
+        <section data-background="#ffffff" data-background-transition="zoom" data-transition="zoom" data-transition-speed="fast">
+          <h1>Python Oddities Explained</h1>
+          <p>
+          <small><a href="http://treyhunner.com" rel="author">Trey Hunner</a> / <a href="https://twitter.com/treyhunner">@treyhunner</a></small>
+          </p>
+          <aside class="notes" data-markdown>
+            TODO
+          </aside>
+        </section>
+
+        <section>
+          <div class="aboutme-card">
+            <a href="http://truthful.technology"><img src="truthful-technology-logo.svg" class="no-style aboutme-logos" alt="Truthful Technology"></a>
+          </div>
+          <div class="aboutme-card">
+            <a href="http://pythonmorsels.com"><img src="morsels-logo.svg" class="no-style aboutme-logos" alt="Python Morsels"></a>
+          </div>
+          <aside class="notes" data-markdown>
+            - My name is Trey
+            - I help Python &amp; Django teams on-board new teammates and turn their front-end developers into full-stack Django developers.
+            - And I run a Python exercise subscription service where where I send out 1 Python exercise every week.  It's called Python Morsels.
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <h2>This talk supports Python 3 only</h2>
+          <h3 class="fragment">If you need a reason to upgrade, ask me what oddities Python 2 has</h3>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <h2>What is a "Python oddity"?</h2>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+      </section>
+
+      <section>
+
+        <section>
+          <h2>Errors of Equality</h2>
+        </section>
+
+        <section>
+          <h3><span class="fragment" data-fragment-index=5>Equality </span><span class="fragment" data-fragment-index=6>and Identity</span></h3>
+          <pre class="python"><code data-trim data-noescape>
+>>> a = [1, 2]
+>>> b = [1, 2]
+>>> <span class="fragment" data-fragment-index=1>a == b</span>
+<span class="fragment" data-fragment-index=2>True
+>>> </span><span class="fragment" data-fragment-index=3>a is b</span>
+<span class="fragment" data-fragment-index=4>False</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> a = [1, 2]
+>>> b = [1, 2]
+>>> <span class="fragment">a is b
+False
+>>> </span><span class="fragment">id(a), id(b)
+(140678342682600, 140678342683752)
+>>> </span><span class="fragment">c = a</span>
+<span class="fragment">False</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> nums = [1, 2]
+>>> <span class="fragment">enumerate(nums) == enumerate(nums)</span>
+<span class="fragment">False
+>>> </span><span class="fragment">enumerate(nums) is enumerate(nums)</span>
+<span class="fragment">False</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO enumerate objects are lazy
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> nums = [1, 2]
+>>> <span class="fragment">a = enumerate(nums)
+>>> b = enumerate(nums)
+>>> </span><span class="fragment">a == b</span><span class="fragment">
+False
+>>> </span><span class="fragment">list(a) == list(b)
+</span><span class="fragment">True
+>>> </span><span class="fragment">a
+&lt;enumerate object at 0x7ff9ceb3c678>
+>>> </span><span class="fragment">a == a, a == b
+(True, False)
+>>> </span><span class="fragment">a is a, a is b
+(True, False)</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO enumerate objects are lazy
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> nums = [1, 2]
+>>> <span class="fragment">a = enumerate(nums)
+>>> </span><span class="fragment">a == a
+True
+>>> </span><span class="fragment">a is a
+True</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO enumerate objects are lazy
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> <span class="fragment">x = 999
+>>> </span><span class="fragment">y = 999
+>>> </span><span class="fragment">x == y
+</span><span class="fragment">True
+>>> </span><span class="fragment">x is y
+</span><span class="fragment">False
+>>> </span><span class="fragment">x = 4
+>>> </span><span class="fragment">y = 4
+>>> </span><span class="fragment">x is y
+</span><span class="fragment">True</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+lots_of_numbers = range(-1000, 1000)
+the_same_numbers = range(-1000, 1000)
+same_numbers = (
+    i
+    for i, j in zip(lots_of_numbers, the_same_numbers)
+    if i is j
+)
+print(*same_numbers, sep=", ")
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO assignment on one line vs two in the REPL does something different with identity/interning (the right word?)
+            - TODO if you're going to try this at home, be aware that the Python REPL acts differently than Python modules.  One whole Python module is sort of like one line in the Python REPL.
+          </aside>
+        </section>
+
+        <section>
+          <pre class="no-highlight"><code class="hljs" data-trim style="overflow: hidden;">
+-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
+48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64,
+65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
+82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98,
+99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112
+113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125,
+126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138,
+139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151,
+152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164,
+165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177,
+178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190,
+191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203,
+204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216,
+217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229,
+230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242,
+243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO assignment on one line vs two in the REPL does something different with identity/interning (the right word?)
+            - TODO if you're going to try this at home, be aware that the Python REPL acts differently than Python modules.  One whole Python module is sort of like one line in the Python REPL.
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> <span class="fragment">x = 'a' * 10
+>>> y = 'a' * 10
+>>> </span><span class="fragment">x is y
+</span><span class="fragment">True
+>>> </span><span class="fragment">x = 'a' * 1000
+>>> y = 'a' * 1000
+>>> </span><span class="fragment">x is y
+</span><span class="fragment">False</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> x = 'a' * 1000
+>>> y = 'a' * 1000
+>>> </span><span class="fragment">m = x[:10]
+>>> n = y[:10]
+>>> </span><span class="fragment">m is n
+</span><span class="fragment">False
+>>> </span><span class="fragment">m, n
+('aaaaaaaaaa', 'aaaaaaaaaa')
+>>> </span><span class="fragment">m == n
+True</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <h3>So... should you ever use the <code>is</code> operator?</h3>
+          <h4>Yes</h4>
+          <aside class="notes" data-markdown>
+            - TODO
+            - TODO the `is` operator is useful when you actually care whether two objects are identical... the same exact object in memory... and not just equal
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO PEP8 recommends using `is` for comparisons with singletons: `None`, `True`, and `False`
+            - TODO though it also recommends relying on truthiness when it makes sense, and I'd usually recommend that as well except in cases where you specifically care about `None`
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO `is` is useful for sentinel values, which is something I teach quite a bit through my Python exercises and rely on in my own code but that I see discussed very rarely in Python courses
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO `is` is useful when you want to do something special with equality but not when you encounter the exact same object
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO `is` is useful in other cases where identity is the thing you actually care about... for example checking whether an object is an iterator
+          </aside>
+        </section>
+
+        <section>
+          <h2>Takeaways</h2>
+          <ul>
+            <li class="fragment">Don't rely on identity</li>
+          </ul>
+          <aside class="notes" data-markdown>
+            - TODO
+            - `==` is much more commonly used and much more widely useful than `is`
+            - rely on equality over identity most of the time
+            - if you find yourself using `is` when you shouldn't, your code may have very hard to catch bugs
+          </aside>
+        </section>
+
+      </section>
+      <section>
+
+        <section>
+          <h2>Scope Scares</h2>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> <span class="fragment">x = 0
+>>> </span><span class="fragment">numbers = [1, 1, 2, 3, 5, 8]
+>>> </span><span class="fragment">for x in numbers:
+...     y = x**2
+...
+>>> </span><span class="fragment">y</span>
+<span class="fragment">64</span><span class="fragment">
+>>> x</span>
+<span class="fragment">8</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> <span class="fragment">x = 0
+>>> </span><span class="fragment">numbers = [1, 1, 2, 3, 5, 8]
+>>> </span><span class="fragment">squares = [x**2 for x in numbers]
+>>> </span><span class="fragment">x</span>
+<span class="fragment">0</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO what is x here?
+            - x is 0, in Python 3.  In Python 2, list comprehensions leaked their scope, but in Python 3, list comprehensions have their own scope
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> numbers = [1]
+>>> <span class="fragment">class A:
+...     numbers = [2]
+...     m = 3
+...     squares = [n**2 for n in numbers]
+...
+>>> </span><span class="fragment">numbers[0], A.numbers[0], A.m, A.squares[0]
+</span><span class="fragment">(1, 2, 3, 4)</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO What is this going to print?
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> <span class="fragment">class A:
+...     numbers = [2]
+...     </span><span class="fragment">for n in numbers:
+...         print(n**2)
+...</span><span class="fragment">
+4
+>>> </span><span class="fragment">A.numbers
+[2]
+>>> </span><span class="fragment">A.n
+2</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO classes have their scope.  The variables that we assign inside that scope become class attributes.
+            - TODO We're allowed to write arbitrary code inside a class
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> <span class="fragment">class A:
+...     numbers = [1, 2]
+...     m = 3
+...     </span><span class="fragment">squares = [n**m for n in numbers]
+...     </span><span class="fragment">print(squares[0])
+...</span><span class="fragment">
+Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+  File "&lt;stdin>", line 3, in A
+  File "&lt;stdin>", line 3, in &lt;listcomp>
+NameError: name 'm' is not defined</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO What is this going to print?
+            - That was kind of trick question, because we actually get an error
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> class A:
+...     numbers = [1, 2]
+...     <span class="fragment">def hi(): print(numbers)
+...     hi()
+...</span><span class="fragment">
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 4, in A
+  File "<stdin>", line 3, in hi
+NameError: name 'numbers' is not defined</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO What is this going to print?
+            - That was kind of trick question, because we actually get an error
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape style="overflow: hidden;">
+>>> <span class="fragment">NUMBERS = [1, 2, 3]
+>>> </span><span class="fragment">def add_numbers(*numbers):
+...     NUMBERS += numbers
+...</span><span class="fragment">
+>>> </span><span class="fragment">add_numbers([4, 5, 6])</span><span class="fragment">
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 2, in add_numbers
+UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO The += operator both reads from and assign to the variable
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape style="overflow: hidden;">
+>>> NUMBERS = [1, 2, 3]
+>>> <span class="fragment">def add_numbers(*numbers):
+...     print(NUMBERS)
+...     NUMBERS = numbers
+...</span><span class="fragment">
+>>> set_numbers([4, 5, 6])
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 2, in add_numbers
+UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO Names cannot be both local and non-local/global in the same scope
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> NUMBERS = [1, 2, 3]
+>>> def print_numbers():
+...     print(NUMBERS)
+...
+>>> print_numbers()
+[1, 2, 3]
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO we can print without assigning to it
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape style="overflow: hidden;">
+<span class="fragment bold-current" data-fragment-index=5>>>> NUMBERS = [1, 2, 3]</span>
+>>> def set_numbers(*numbers):
+...     <span class="fragment bold-current" data-fragment-index=5><span class="fragment bold-current" data-fragment-index=1>NUMBERS = numbers</span></span>
+...     <span class="fragment bold-current" data-fragment-index=2>print(NUMBERS)</span>
+...
+>>> set_numbers(<span class="fragment bold-current" data-fragment-index=3>[4, 5, 6]</span>)
+[4, 5, 6]
+>>> <span class="fragment bold-current" data-fragment-index=4>NUMBERS
+[1, 2, 3]</span><span class="fragment bold-current" data-fragment-index=6></span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO and we can assign to a local variable and then print it
+            - but this doesn't change our global `NUMBERS` variable
+            - there is a special statement for changing global variables in Python, but I'm not going to show you how to do it because it's usually a bad idea
+            - You should trust Python's variable scope rules.  They tend to be pretty good about both saving you from bugs and pushing you in the direction of doing only what you need to do.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Takeaways</h2>
+          <ul>
+            <li class="fragment">Reading global variables is perfectly fine</li>
+            <li class="fragment">But don't try to assign to them from a local scope</li>
+            <li class="fragment">List comprehensions have their own scope</li>
+            <li class="fragment">Classes have their own scope</li>
+            <li class="fragment">Comprehension scope and class scope don't really agree with each other</li>
+          </ul>
+          <aside class="notes" data-markdown>
+            - TODO
+            - `==` is much more commonly used and much more widely useful than `is`
+            - rely on equality over identity most of the time
+            - if you find yourself using `is` when you shouldn't, your code may have very hard to catch bugs
+          </aside>
+        </section>
+
+      </section>
+      <section>
+
+        <section>
+          <h2>Teenage Mutable Ninja Turtles</h2>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape style="overflow: hidden;">
+>>> NUMBERS = [1, 2, 3]
+>>> <span class="fragment">def set_numbers(*numbers):
+...     print(NUMBERS)
+...     NUMBERS.extend(numbers)
+...
+>>> </span><span class="fragment">set_numbers([4, 5, 6])</span>
+<span class="fragment">[1, 2, 3, 4, 5, 6]</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO what'll happen if we do this?
+            - this actually works
+            - I said that we can't change our global `NUMBERS` variable, but it seems like we changed our `NUMBERS` variable!
+            - The word "change" is ambiguous.  Before we were assigning to a variable and now we're mutating the object that a variable points to.  We're allowed to mutate any object that we can get our hands on, so long as its mutable.  But we're only allowed to assign to local variables unless we go out of our way to ask Python to do something different.
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> <span class="fragment">[0] * 3
+</span><span class="fragment">[0, 0, 0]
+>>> </span><span class="fragment">[[0] * 3] * 3
+</span><span class="fragment">[[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+>>> </span><span class="fragment">matrix = [[0] * 3] * 3
+>>> </span><span class="fragment">matrix[1][1] = 1
+>>> </span><span class="fragment">matrix
+</span><span class="fragment">[[0, 1, 0], [0, 1, 0], [0, 1, 0]]</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> <span class="fragment">row = [0, 0, 0]
+>>> </span><span class="fragment">matrix = [row, row, row]
+>>> </span><span class="fragment">row[1] = 2
+>>> </span><span class="fragment">matrix
+</span><span class="fragment">[[0, 2, 0], [0, 2, 0], [0, 2, 0]]
+>>> </span><span class="fragment">matrix[1][1] = 1
+>>> </span><span class="fragment">matrix
+[[0, 1, 0], [0, 1, 0], [0, 1, 0]]
+>>> </span><span class="fragment">matrix[0] is matrix[1] is row
+True</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> <span class="fragment">row = [0, 0, 0]
+>>> </span><span class="fragment">row2 = row
+>>> </span><span class="fragment">row2[1] = 1
+>>> </span><span class="fragment">row2
+[0, 1, 0]
+>>> </span><span class="fragment">row
+[0, 1, 0]
+>>> </span><span class="fragment">id(row)
+139670455619848
+>>> id(row2)
+139670455619848
+>>> </span><span class="fragment">row is row2
+True</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO objects are distinct from the variables that point to them
+            - when we talk about whether variables can be changed, we're talking about scope
+            - but when we talk about whether objects can be changed we're talking about mutability
+            - "Changing" a variable means which object the variable points to... the only way to do that is with an assignment
+            - "Changing" an object means mutating an object that one or more variables probably point to
+            - Variables in Python are *not* bucket that contain objects.  That analogy doesn't hold up in Python.
+            - Python's variables are pointers that refer to the memory location that objects live at.
+            - TODO Ned's talk on variables and values and Brandon's talk with buckets and strings off the edge of a cliff
+          </aside>
+        </section>
+
+        <section>
+          <h2>Takeaways</h2>
+          <ul>
+            <li class="fragment">Variables in Python are not buckets that contain things</li>
+            <li class="fragment">Variables are names that point to objects</li>
+            <li class="fragment">Assigning to a variable changes what object it points to</li>
+            <li class="fragment">Mutating an object changes the object itself</li>
+            <li class="fragment">Lists and dictionaries don't "contain" objects, they contain references (pointers) to objects</li>
+          </ul>
+          <aside class="notes" data-markdown>
+            - TODO
+            - `==` is much more commonly used and much more widely useful than `is`
+            - rely on equality over identity most of the time
+            - if you find yourself using `is` when you shouldn't, your code may have very hard to catch bugs
+          </aside>
+        </section>
+
+      </section>
+      <section>
+
+        <section>
+          <h2>Intriguing In-Place Additions</h2>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> <span class="fragment">a = b = [1, 2]
+>>> </span><span class="fragment">a += [3, 4]
+>>> </span><span class="fragment">a
+</span><span class="fragment">[1, 2, 3, 4]
+>>> </span><span class="fragment">b
+</span><span class="fragment">[1, 2, 3, 4]</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> <span class="fragment">a = b = (1, 2)
+>>> </span><span class="fragment">a += (3, 4)
+>>> </span><span class="fragment">a
+</span><span class="fragment">(1, 2, 3, 4)
+>>> </span><span class="fragment">b
+</span><span class="fragment">(1, 2)</span>
+
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> <span class="fragment">x = [1, 2]
+>>> </span><span class="fragment">x += (3, 4)</span><span class="fragment">
+>>> x</span><span class="fragment">
+[1, 2, 3, 4]
+>>> </span><span class="fragment">y = (1, 2)
+>>> </span><span class="fragment">y += [3, 4]
+</span><span class="fragment">Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+TypeError: can only concatenate tuple (not "list") to tuple</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> <span class="fragment">x = []
+>>> </span><span class="fragment">x += "hey"
+>>> </span><span class="fragment">x
+['h', 'e', 'y']
+>>> </span><span class="fragment">x.extend('iterable')
+>>> </span><span class="fragment">x
+['h', 'e', 'y', 'a', 'i', 't', 'e', 'r', 'a', 'b', 'l', 'e']</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO lists are the odd one here
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> <span class="fragment">x = ([1], [4])
+>>> </span><span class="fragment">x[0].append(2)</span><span class="fragment">
+>>> </span>x<span class="fragment">
+([1, 2], [4])
+>>> </span><span class="fragment">y = x[0]
+>>> </span><span class="fragment">y.append(3)
+>>> </span><span class="fragment">x[0]
+[1, 2, 3]
+>>> </span><span class="fragment">x
+([1, 2, 3], [4])</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> <span class="fragment">x = ([1, 2],)
+>>> </span><span class="fragment">x[0] += [3, 4]
+</span><span class="fragment">Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+TypeError: 'tuple' object does not support item assignment
+>>> </span><span class="fragment">x
+([1, 2, 3, 4],)</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> <span class="fragment" data-fragment-index=1>x = ([1, 2],)
+>>> </span><span class="fragment" data-fragment-index=2><span class="bold-current fragment" data-fragment-index=4>x[0] =</span> x[0].<span class="bold-current fragment" data-fragment-index=3>__iadd__([3, 4])</span>  # x[0] += [3, 4]</span>
+<span class="fragment" data-fragment-index=5>Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+TypeError: 'tuple' object does not support item assignment
+>>> </span><span class="fragment" data-fragment-index=6>x[0]
+[1, 2, 3, 4]
+>>> </span><span class="fragment" data-fragment-index=7>x[0].__iadd__([5])
+[1, 2, 3, 4, 5]
+>>> </span><span class="fragment" data-fragment-index=8>x[0] = [1, 2, 3, 4, 5]
+Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+TypeError: 'tuple' object does not support item assignment</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> a = [1, 2]
+>>> a.extend([3, 4])
+>>> a += [5, 6]
+>>> a[len(a):] = [7, 8]
+>>> a
+[1, 2, 3, 4, 5, 6, 7, 8]
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> NUMBERS = [1, 2, 3]
+>>> class MyFavoriteClass:
+...     NUMBERS += [4, 5, 6]
+...
+>>> MyFavoriteClass.NUMBERS
+[1, 2, 3, 4, 5, 6]
+>>> NUMBERS
+[1, 2, 3, 4, 5, 6]
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> VOWELS = "aeiou"
+>>> class B:
+...     VOWELS += "y"
+...
+>>> VOWELS
+'aeiou'
+>>> B.VOWELS
+'aeiouy'
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+      </section>
+      <section>
+
+        <section>
+          <h2>Operator Obtusity</h2>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> 'Python' in 'Python' in 'Python'
+True
+>>> 'Python' in 'Python'
+True
+>>> True in 'Python'
+Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+TypeError: 'in &lt;string>' requires string as left operand, not bool
+>>> ('Python' in 'Python') in 'Python'
+Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+TypeError: 'in &lt;string>' requires string as left operand, not bool
+>>> 'Python' in 'Python' in 'Python'
+True
+>>> 'Python' in ['Python'] in [['Python']]
+True
+>>> x = 25
+>>> 10 &lt; x &lt; 20
+False
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO chained comparisons can actually be really handy
+          </aside>
+        </section>
+
+      </section>
+      <section>
+
+        <section>
+          <h2>Star Silliness</h2>
+        </section>
+
+        <section>
+          <pre class="no-highlight"><code class="hljs" data-trim data-noescape>
+>>> numbers = range(3)
+>>> *nums1 = numbers
+  File "&lt;stdin>", line 1
+SyntaxError: starred assignment target must be in a list or tuple
+>>> *nums2, = numbers
+>>> nums2
+[0, 1, 2]
+>>> [*nums3] = numbers
+>>> nums3
+[0, 1, 2]
+>>> nums4 = *numbers
+  File "&lt;stdin>", line 1
+SyntaxError: can't use starred expression here
+>>> nums5 = [*numbers]
+>>> nums5
+[0, 1, 2]
+>>> nums6 = *numbers,
+>>> nums6
+(0, 1, 2)
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO Python 3.5 added a lot of new generalizations for star expressions.  You should play with them.  The examples I showed here are silly, but these can actually be really useful.
+          </aside>
+        </section>
+
+      </section>
+      <section>
+
+        <section>
+          <h2>String Stuff</h2>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> """multiline
+... strings"""
+'multiline\nstrings'
+>>> """""strings with
+... five quotes around them!"""""
+'""strings with\nfive quotes around them!'
+>>> """""strings with five
+... quotes around them!"""""
+'""strings with five\nquotes around them!'
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO implicit string concatenation: just say no
+            - you'll get mixed opinions on implicit string concatenation, but I really think you should avoid it
+          </aside>
+        </section>
+
+        <section>
+          <h2>Miscellaneous Mishaps</h2>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> nums = reversed([1, 2, 3, 4])
+>>> 2 in nums
+True
+>>> 2 in nums
+False
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO I explain this one in my Loop Better talk that I presented at PyGotham last year
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> i, x = 0, [1, 2]
+>>> i, x[i] = 1, 4
+>>> x
+[1, 4]
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> x = {'a': 1, 'b': 2}
+>>> y = {}
+>>> for k, y[k] in x.items(): pass
+...
+>>> y
+{'a': 1, 'b': 2}
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> x = []
+>>> x.append(x)
+>>> x
+[[...]]
+>>> repr(x)
+'[[...]]'
+>>> eval(repr(x))
+[[Ellipsis]]
+>>> [[...]]
+[[Ellipsis]]
+>>> ...
+Ellipsis
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO Python 3.5 added a lot of new generalizations for star expressions.  You should play with them.  The examples I showed here are silly, but these can actually be really useful.
+          </aside>
+        </section>
+
+      </section>
+
+      <section>
+
+        <section>
+          <h2>TODO</h2>
+          <ul>
+            <li class="fragment">TODO</li>
+          </ul>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+  from todo import Todo
+
+  <span class="fragment" data-fragment-index=1><span class="fragment bold-current" data-fragment-index=4>class SomeClass(Todo)</span>:
+      <span class="fragment bold-current" data-fragment-index=5>x: float <span class="fragment current-visible" data-fragment-index=6>= 0</span>
+      y: float <span class="fragment current-visible" data-fragment-index=6>= 0</span>
+      z: float <span class="fragment current-visible" data-fragment-index=6>= 0</span><span class="fragment" data-fragment-index=7></span></span></span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+
+      </section>
+
+			<section>
+
+        <section style="text-align: left;" data-background="#663399" data-background-transition="slide" data-transition="slide">
+          <h2>Need help getting your team <nobr>up to speed on Python?</nobr></h2>
+          <h3>
+            <strong>Trey Hunner</strong><br>
+            <small>Python &amp; Django Team Trainer</small>
+          </h3>
+          <p>
+            <small>
+              Contact me: <a href="mailto:&#116;&#114;&#101;&#121;&#064;&#116;&#114;&#117;&#116;&#104;&#102;&#117;&#108;&#046;&#116;&#101;&#099;&#104;&#110;&#111;&#108;&#111;&#103;&#121;">&#116;&#114;&#101;&#121;&#064;&#116;&#114;&#117;&#116;&#104;&#102;&#117;&#108;&#046;&#116;&#101;&#099;&#104;&#110;&#111;&#108;&#111;&#103;&#121;</a>
+            </small>
+          </p>
+          <p>
+          <a href="http://truthful.technology"><img src="logo.svg" class="no-style logo"></a>
+          <a href="http://pythonmorsels.com"><img src="python-morsels-logo.svg" class="no-style logo"></a>
+          </p>
+          <aside class="notes" data-markdown>
+            - I'd love to help you improve your Python skills
+            - Find me in the halls or at my booth if you'd like to chat about that later
+            - Thank you!
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> '8' &lt; 8
+False
+>>> '8' &lt; 9
+False
+>>> '8' &lt; 99999999999999999999999999999999
+False
+>>> [8] > 8
+True
+>>> [8] &lt; '8'
+True
+>>> sorted([type(8), type('8'), type([8])])
+[&lt;type 'int'>, &lt;type 'str'>, &lt;type 'list'>]
+>>> 8 &lt; '8' &lt; [8]
+False
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO we can print without assigning to it
+          </aside>
+        </section>
+
+      </section>
+
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+    <script src="js/truthful.js"></script>
+
+
+    <script>
+      // More info https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        history: true,
+
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+          { src: 'plugin/markdown/marked.js' },
+          { src: 'plugin/markdown/markdown.js' },
+          { src: 'plugin/notes/notes.js', async: true },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+        ]
+      });
+    </script>
+  </body>
+</html>

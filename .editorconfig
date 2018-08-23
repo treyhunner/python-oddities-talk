@@ -1,0 +1,10 @@
+[*]
+indent_size = 2
+indent_style = space
+
+[*.js]
+indent_style = tab
+indent_size = tab
+
+[*.py]
+indent_size = 4
