@@ -37,6 +37,21 @@
           </aside>
         </section>
 
+        <!--
+
+          - not too much on identity: maybe explain identity vs equality to setup mutability
+          - remove class scope oddities
+          - remove [0] * 3 oddities
+          - a += b is not always the same as a = a + b... but sometimes it is!
+          - List can contain itself
+          - final takaways:
+            - Variables in Python are pointers: so variable assignments don't copy things, they just change the object that a particular variable name points to
+            - the word change is ambiguous: "can't change variable X" could mean it's out of scope and can't be assigned to or could mean the object that X currently points to is immutable
+            - containers don't contain objects, they just contain references to objects... two containers can "contain" to the same object and objects can "contain" themselves
+            - += is not always the same as = +... it is for tuples, strings, and numbers, but not on lists
+
+        -->
+
         <section>
           <div class="aboutme-card">
             <a href="http://truthful.technology"><img src="truthful-technology-logo.svg" class="no-style aboutme-logos" alt="Truthful Technology"></a>
@@ -48,7 +63,17 @@
             - My name is Trey
             - I help Python &amp; Django teams on-board new teammates and turn their front-end developers into full-stack Django developers.
             - And I run a Python exercise subscription service where where I send out 1 Python exercise every week.  It's called Python Morsels.
-            - TODO
+          </aside>
+        </section>
+
+        <section>
+          <h1>I teach Python to teams</h1>
+          <h3 class="fragment">My students ask very interesting questions</h3>
+          <h3 class="fragment"><q>That's odd.  What's going on here?</q></h3>
+          <aside class="notes" data-markdown>
+            - So when I do on-site trainings with teams, **(click)** my students often ask questions about their code that doesn't do what they think it should do
+            - Sometimes this code is pretty straightforward to explain, but sometimes it's a little harder to explain what's going on **(click)**
+            - This talk is inspired by the types of questions that I've been asked in my training sessions
           </aside>
         </section>
 
@@ -56,14 +81,11 @@
           <h2>This talk supports Python 3 only</h2>
           <h3 class="fragment">If you need a reason to upgrade, ask me what oddities Python 2 has</h3>
           <aside class="notes" data-markdown>
-            - TODO
-          </aside>
-        </section>
-
-        <section>
-          <h2>What is a "Python oddity"?</h2>
-          <aside class="notes" data-markdown>
-            - TODO
+            - This is a Python 3 only talk
+            - There are parts of this talk that may apply to Python 2, but I don't that everything will work quite the same way
+            - So if you're on Python 2, you'll need to test these things out on your own
+            - If this talk was a Python 2 oddities talk, it would be funnier and longer **(click)**
+            - So if you *are* on Python 2 and you'd like to me to help convince you to upgrade, ask me about Python 2 oddities
           </aside>
         </section>
 
@@ -73,6 +95,9 @@
 
         <section>
           <h2>Errors of Equality</h2>
+          <aside class="notes" data-markdown>
+            - Let's talk about equality
+          </aside>
         </section>
 
         <section>
@@ -86,7 +111,11 @@
 <span class="fragment" data-fragment-index=4>False</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO
+            - Let's say we have two lists, `a` and `b`.
+            - They have the same items, so if we ask whether a is equal to be, we'll see that this is True
+            - If we ask whether a **is** b, we'll see that that's False
+            - The first question is asking about equality between `a` and `b`
+            - The second question is asking about identity: we're asking whether `a` and `b` are exactly the same object in memory.  Which they aren't.
           </aside>
         </section>
 
@@ -98,59 +127,18 @@
 False
 >>> </span><span class="fragment">id(a), id(b)
 (140678342682600, 140678342683752)
->>> </span><span class="fragment">c = a</span>
-<span class="fragment">False</span>
-          </code></pre>
-          <aside class="notes" data-markdown>
-            - TODO
-          </aside>
-        </section>
-
-        <section>
-          <pre class="python"><code data-trim data-noescape>
->>> nums = [1, 2]
->>> <span class="fragment">enumerate(nums) == enumerate(nums)</span>
-<span class="fragment">False
->>> </span><span class="fragment">enumerate(nums) is enumerate(nums)</span>
-<span class="fragment">False</span>
-          </code></pre>
-          <aside class="notes" data-markdown>
-            - TODO enumerate objects are lazy
-          </aside>
-        </section>
-
-        <section>
-          <pre class="python"><code data-trim data-noescape>
->>> nums = [1, 2]
->>> <span class="fragment">a = enumerate(nums)
->>> b = enumerate(nums)
->>> </span><span class="fragment">a == b</span><span class="fragment">
-False
->>> </span><span class="fragment">list(a) == list(b)
-</span><span class="fragment">True
->>> </span><span class="fragment">a
-&lt;enumerate object at 0x7ff9ceb3c678>
->>> </span><span class="fragment">a == a, a == b
-(True, False)
->>> </span><span class="fragment">a is a, a is b
-(True, False)</span>
-          </code></pre>
-          <aside class="notes" data-markdown>
-            - TODO enumerate objects are lazy
-          </aside>
-        </section>
-
-        <section>
-          <pre class="python"><code data-trim data-noescape>
->>> nums = [1, 2]
->>> <span class="fragment">a = enumerate(nums)
->>> </span><span class="fragment">a == a
+>>> </span><span class="fragment">c = a
+>>> </span><span class="fragment">id(a), id(c)
+(140678342682600, 140678342682600)
+>>> </span><span class="fragment">a == c
 True
->>> </span><span class="fragment">a is a
+>>> </span><span class="fragment">a is c
 True</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO enumerate objects are lazy
+            - The question `a is b` is asking whether the memory location of each these two objects is the same, which it's not in this case
+            - If we assign the variable `c` to the variable `a`, we'll see that `c` and `a` now point to the same object in memory, which means they're not just equal: they're also identical
+            - This will come up again later when we talk about mutability
           </aside>
         </section>
 
@@ -168,7 +156,15 @@ True</span>
 </span><span class="fragment">True</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO
+            - Let's take two variables and assign them each to the same number.
+            - `x` is `999` and so is `y`
+            - Does `x` equal `y`? *(pause)* Yes.
+            - Is `x` identical to `y`? *(pause)* No, they're not identical.  Python stores these two objects separately.
+            - Somewhat strangely... if `x` and `y` are both `4`, and we ask the same question... we'll see that this time `x` and `y` *are* identical
+            - What's going on here?
+            - *(pause)8
+            - So Python treats some numbers differently than others...
+            - Some numbers will always be identical to the same number in Python
           </aside>
         </section>
 
@@ -184,8 +180,7 @@ same_numbers = (
 print(*same_numbers, sep=", ")
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO assignment on one line vs two in the REPL does something different with identity/interning (the right word?)
-            - TODO if you're going to try this at home, be aware that the Python REPL acts differently than Python modules.  One whole Python module is sort of like one line in the Python REPL.
+            - We can see which numbers are special by looping over a wide range of numbers and printing out the ones that are identical to each other whenever they're equal... even when they'd normally be different objects in memory
           </aside>
         </section>
 
@@ -211,8 +206,9 @@ print(*same_numbers, sep=", ")
 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO assignment on one line vs two in the REPL does something different with identity/interning (the right word?)
-            - TODO if you're going to try this at home, be aware that the Python REPL acts differently than Python modules.  One whole Python module is sort of like one line in the Python REPL.
+            - The special numbers in Python are -5 through 256
+            - The CPython runtime, that's the default python command that you run on your computer, it considers these numbers to be very common, so it stores them in memory at all times and makes sure that anytime we see one of these numbers, it uses the one that's already being stored, so it doesn't take up any extra memory
+            - Python also does something similar for strings
           </aside>
         </section>
 
@@ -228,7 +224,9 @@ print(*same_numbers, sep=", ")
 </span><span class="fragment">False</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO
+            - If we have two fairly short strings that are equal to each other, and we ask whether they're identical, Python will tell us that they are
+            - But if we have longer strings that are also equal to each other, and we ask whether they're identical, Python will tell us that they aren't
+            - This isn't quite as straightforward as the integer optimization we just saw though
           </aside>
         </section>
 
@@ -246,62 +244,60 @@ print(*same_numbers, sep=", ")
 True</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO
+            - Because if we take those long strings, and we slice them to get short ones again
+            - And then we ask whether those short strings are identical, we'll see that they aren't
+            - But they represent the same characters
+            - And they are equal to each other
+            - So it might seem like identity is sometimes the same as equality, but you can't rely on that.  This identity trick is an optimization that CPython does with integers and strings only.  You shouldn't rely on it.
           </aside>
         </section>
 
         <section>
           <h3>So... should you ever use the <code>is</code> operator?</h3>
-          <h4>Yes</h4>
+          <h4 class="fragment">Yes, when you care about identity, not just equality</h4>
           <aside class="notes" data-markdown>
-            - TODO
-            - TODO the `is` operator is useful when you actually care whether two objects are identical... the same exact object in memory... and not just equal
+            - So at this point you might be thinking, the `is` operator seems like it's not actually very useful
+            - But it *is* useful, it's just not as commonly useful as `==`
+            - The `is` operator is useful whenever you actually *care* whether two objects are identical... the same exact object in memory... and not just equal to each other
           </aside>
         </section>
 
         <section>
           <pre class="python"><code data-trim data-noescape>
-          </code></pre>
-          <aside class="notes" data-markdown>
-            - TODO PEP8 recommends using `is` for comparisons with singletons: `None`, `True`, and `False`
-            - TODO though it also recommends relying on truthiness when it makes sense, and I'd usually recommend that as well except in cases where you specifically care about `None`
-          </aside>
-        </section>
+def from_node(node):
+    node_list = []
+    while <span class="fragment bold-current">node is not None</span>:
+        node_list.append(node)
+        node = node.next
+    return node_list
 
-        <section>
-          <pre class="python"><code data-trim data-noescape>
+<span class="fragment">def is_iterator(iterable):
+    """Return True if the given iterable is also an iterator."""
+    return iter(iterable) is iterable</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO `is` is useful for sentinel values, which is something I teach quite a bit through my Python exercises and rely on in my own code but that I see discussed very rarely in Python courses
-          </aside>
-        </section>
-
-        <section>
-          <pre class="python"><code data-trim data-noescape>
-          </code></pre>
-          <aside class="notes" data-markdown>
-            - TODO `is` is useful when you want to do something special with equality but not when you encounter the exact same object
-          </aside>
-        </section>
-
-        <section>
-          <pre class="python"><code data-trim data-noescape>
-          </code></pre>
-          <aside class="notes" data-markdown>
-            - TODO `is` is useful in other cases where identity is the thing you actually care about... for example checking whether an object is an iterator
+            - It's common to use `is` for comparisons with singletons like `None` and `True` because they'll always be identical to each other
+            - That's probably the most common use of the `is` operator in Python
+            - Relying on identity is useful whenever you want to know when you've encountered the exact same object as another one
+            - For example here we're checking whether an object is an iterator by seeing whether its iterator is identical to itself
           </aside>
         </section>
 
         <section>
           <h2>Takeaways</h2>
           <ul>
-            <li class="fragment">Don't rely on identity</li>
+            <li class="fragment">Equality and identity are different</li>
+            <li class="fragment">Checking for equality is very common</li>
+            <li class="fragment">Checking for identity is not nearly as common</li>
+            <li class="fragment">Python includes optimizations that make for strange identity patterns with strings and numbers</li>
+            <li class="fragment">Checking for identity when you need equality causes bugs</li>
           </ul>
           <aside class="notes" data-markdown>
-            - TODO
-            - `==` is much more commonly used and much more widely useful than `is`
-            - rely on equality over identity most of the time
-            - if you find yourself using `is` when you shouldn't, your code may have very hard to catch bugs
+            - Equality and identity are not the same thing
+            - The `==` operator is much more commonly useful than the `is` operator
+            - If you're wondering whether you want equality or identity, most of the time you want equality
+            - Python includes some optimizations that involve making some strings and numbers identical when the aren't really
+            - So if you find yourself using `is` when you shouldn't, your code may have very hard to catch bugs
           </aside>
         </section>
 
@@ -310,6 +306,9 @@ True</span>
 
         <section>
           <h2>Scope Scares</h2>
+          <aside class="notes" data-markdown>
+            - Let's talk about variable scope
+          </aside>
         </section>
 
         <section>
@@ -325,7 +324,15 @@ True</span>
 <span class="fragment">8</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO
+            - Let's say we have a variable `x` that is equal to `0` and a variable `numbers` that points to a list of numbers
+            - If we loop over this list of numbers and assign `y` to the square of each number
+            - What will we see if we access `y` after this loop?
+            - 64!
+            - What will we see if we access `x` now?
+            - 8!
+            - Unlike many other programming languages, loops leak their scope in Python
+            - Variables defined inside a loop are accessible outside of the loop
+            - And that `for x in numbers` in just an assignment that happens during each iteration of our loop
           </aside>
         </section>
 
@@ -338,11 +345,14 @@ True</span>
 <span class="fragment">0</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO what is x here?
-            - x is 0, in Python 3.  In Python 2, list comprehensions leaked their scope, but in Python 3, list comprehensions have their own scope
+            - If we take those same `x` and `numbers` variables and we make a list comprehension representing the squares of these numbers and we use `x` as our looping variable
+            - What will `x` be after we've executed all this code?
+            - x is actually still 0 here
+            - ... In Python 3 that is.  In Python 2, list comprehensions used to leaked their scope, but in Python 3, list comprehensions have their own separate scope.
           </aside>
         </section>
 
+        <!--
         <section>
           <pre class="python"><code data-trim data-noescape>
 >>> numbers = [1]
@@ -355,7 +365,13 @@ True</span>
 </span><span class="fragment">(1, 2, 3, 4)</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO What is this going to print?
+            - Let's make a list, called `numbers`
+            - And a class that has some attributes: `numbers`, `m`, and `squares`
+            - I'd like you to consider what *this code* is going to print
+            - We have two different `numbers` variables here, one that's global and one that it's in our class
+            - Our `squares` variable is the result of a list comprehension that loops over `numbers` and squares each of the numbers
+            - Which `numbers` variable is it using?  Will `A.squares[0]` be `1**2` or `2**2`?
+            - It's 4, which is `2**2`.  While we're in the process of creating our class, we can access other variables we've defined inside our class.
           </aside>
         </section>
 
@@ -373,8 +389,12 @@ True</span>
 2</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO classes have their scope.  The variables that we assign inside that scope become class attributes.
-            - TODO We're allowed to write arbitrary code inside a class
+            - This works because classes have their scope
+            - The variables that we assign inside class scope become class attributes
+            - And we're actually allowed to write arbitrary code inside a class as we define it
+            - So we can write a `for` loop inside our class definition... which probably isn't something you should ever do, but you can.  This is just code being executed just like it is anywhere else in Python.
+            - The interesting thing is that our class has not only a `numbers` attribute, but also an attribute `n`.  This `A.n` is here because we were doing an assignment to `n` in each iteration of our loop.
+            - Classes have their own scope, just like functions have their own scope.  All the variables defined inside class scope become class attributes after we've finished defining our class.
           </aside>
         </section>
 
@@ -393,8 +413,12 @@ Traceback (most recent call last):
 NameError: name 'm' is not defined</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO What is this going to print?
+            - Let's define a list, a variable `m` and another list comprehension
+            - This time our comprehension will raise `n` to the power of `m`
+            - What is this going to print?
             - That was kind of trick question, because we actually get an error
+            - Comprehension scope isn't allowed to access class scope
+            - This might seem a little weird and it is really is pretty weird, but there's a good reason for this
           </aside>
         </section>
 
@@ -412,8 +436,10 @@ Traceback (most recent call last):
 NameError: name 'numbers' is not defined</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO What is this going to print?
-            - That was kind of trick question, because we actually get an error
+            - If we define a function inside of a class definition
+            - And then we call that function
+            - We'll get an error if that function accesses variables that are within class scope
+            - This happens this way because otherwise class scope would leak into the methods that live on your class... and that would be really weird
           </aside>
         </section>
 
@@ -422,7 +448,7 @@ NameError: name 'numbers' is not defined</span>
 >>> <span class="fragment">NUMBERS = [1, 2, 3]
 >>> </span><span class="fragment">def add_numbers(*numbers):
 ...     NUMBERS += numbers
-...</span><span class="fragment">
+...
 >>> </span><span class="fragment">add_numbers([4, 5, 6])</span><span class="fragment">
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
@@ -430,25 +456,33 @@ Traceback (most recent call last):
 UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO The += operator both reads from and assign to the variable
+            - Let's say we have a global variable `NUMBERS`
+            - And we want to add more numbers to our list by using `+=`
+            - What will this do if we call `add_numbers` with the list `[4, 5, 6]`?
+            - It could modify `NUMBERS`.  It could make a local variable `NUMBERS`.  It could give an error.
+            - The `+=` operator both reads from and assign to the variable on its left-hand side.  So we're trying to read from a global variable and assign to a global variable
+            - Python doesn't like that
           </aside>
         </section>
+        -->
 
         <section>
           <pre class="python"><code data-trim data-noescape style="overflow: hidden;">
 >>> NUMBERS = [1, 2, 3]
->>> <span class="fragment">def add_numbers(*numbers):
+>>> <span class="fragment">def set_numbers(*numbers):
 ...     print(NUMBERS)
 ...     NUMBERS = numbers
 ...</span><span class="fragment">
 >>> set_numbers([4, 5, 6])
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
-  File "<stdin>", line 2, in add_numbers
+  File "<stdin>", line 2, in set_numbers
 UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO Names cannot be both local and non-local/global in the same scope
+            - If we make a function that prints `NUMBERS` and then assigns to it, calling that function will also give us an error
+            - Variable names in Python functions cannot be both local and non-local/global in the same scope
+            - So we can't read a global variable and then later write to a local variable with the same name.  Python doesn't allow that because that's probably a bug in your code.
           </aside>
         </section>
 
@@ -462,7 +496,7 @@ UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
 [1, 2, 3]
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO we can print without assigning to it
+            - We can't read a global variable without writing to it
           </aside>
         </section>
 
@@ -479,10 +513,11 @@ UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
 [1, 2, 3]</span><span class="fragment bold-current" data-fragment-index=6></span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO and we can assign to a local variable and then print it
-            - but this doesn't change our global `NUMBERS` variable
-            - there is a special statement for changing global variables in Python, but I'm not going to show you how to do it because it's usually a bad idea
-            - You should trust Python's variable scope rules.  They tend to be pretty good about both saving you from bugs and pushing you in the direction of doing only what you need to do.
+            - And we can assign to a local variable (that happens to have the same name as a global) and then print it
+            - but calling this function doesn't change our global `NUMBERS` variable
+            - The global `NUMBERS` variables is shadowed by the local `NUMBERS` variable because it has the same name
+            - There *is* a special statement that allows you to change global variables in Python, but I'm not going to show you how to do it because using it is usually a bad idea
+            - You should trust Python's variable scope rules.  They tend to be pretty good about both saving you from bugs and pushing you in the direction of storing your variables in the right scope.
           </aside>
         </section>
 
@@ -497,9 +532,6 @@ UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
           </ul>
           <aside class="notes" data-markdown>
             - TODO
-            - `==` is much more commonly used and much more widely useful than `is`
-            - rely on equality over identity most of the time
-            - if you find yourself using `is` when you shouldn't, your code may have very hard to catch bugs
           </aside>
         </section>
 
@@ -508,23 +540,32 @@ UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
 
         <section>
           <h2>Teenage Mutable Ninja Turtles</h2>
+          <aside class="notes" data-markdown>
+            - Let's talk about mutability
+          </aside>
         </section>
 
         <section>
           <pre class="python"><code data-trim data-noescape style="overflow: hidden;">
 >>> NUMBERS = [1, 2, 3]
->>> <span class="fragment">def set_numbers(*numbers):
+>>> <span class="fragment">def add_numbers(*numbers):
 ...     print(NUMBERS)
 ...     NUMBERS.extend(numbers)
 ...
->>> </span><span class="fragment">set_numbers([4, 5, 6])</span>
+>>> </span><span class="fragment">add_numbers([4, 5, 6])</span>
 <span class="fragment">[1, 2, 3, 4, 5, 6]</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO what'll happen if we do this?
-            - this actually works
-            - I said that we can't change our global `NUMBERS` variable, but it seems like we changed our `NUMBERS` variable!
-            - The word "change" is ambiguous.  Before we were assigning to a variable and now we're mutating the object that a variable points to.  We're allowed to mutate any object that we can get our hands on, so long as its mutable.  But we're only allowed to assign to local variables unless we go out of our way to ask Python to do something different.
+            - If we take our `add_numbers` function and use the `extend` method instead of an assignment, is this any different?
+            - What will Python do when we call this function this time?
+            - This actually works...
+            - I said before that we can't change our global `NUMBERS` variable, but it seems kinda like we changed our `NUMBERS` variable here!
+            - You'll see this gotcha come up quite a bit... the word "change" is ambiguous
+            - When I say we can't change `NUMBERS`, I meant that we can't *assign* to `NUMBERS`
+            - Assigning to numbers changes the object that the global variable `NUMBERS` points to and that's not allowed unless we're in the same scope as `NUMBERS`
+            - But we're not assigning to `NUMBERS`, we're mutating it.
+            - We *are* allowed to mutate any object that we can get our hands on though, so long as it's mutable
+            - So we're only allowed to assign to local variables, but we can mutate any object as long as it's not immutable.
           </aside>
         </section>
 
@@ -540,7 +581,16 @@ UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
 </span><span class="fragment">[[0, 1, 0], [0, 1, 0], [0, 1, 0]]</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO
+            - TODO remove the multiplication oddities or show them as an after thought
+            - What will this give us?
+            - This gives us a list of three zeros.  We're allowed to multiply lists by numbers in Python, the same way we can multiple strings by numbers (which I think I did earlier)
+            - What will this give us? *(pause)*
+            - This gives us a list of three lists, each with three zeroes in them.
+            - So this `matrix` variable now points to a list of lists of numbers
+            - When we assign `matrix[1][1]` to the number `1`
+            - What will change in `matrix`?
+            - This actually changes the middle number in all three of the inner lists
+            - Let's take a look at what's going on here... with a little aside
           </aside>
         </section>
 
@@ -558,7 +608,13 @@ UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
 True</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO
+            - If we have a list of zeroes that we assign to the `row` variable, and we make a new list that contains that `row` variable three times
+            - We'll have made a list that contains the same exact list three times
+            - If we modify that `row` list, and we look at our `matrix` afterward, we'll see that all of our matrix rows have been modified.  We modified one list that was stored in that list three times.
+            - Likewise, if we modify any one of those row lists by indexing them, it'll modify all three rows
+            - All of these things are identical.  They all refer to exactly the same object in memory.
+            - The important takeaway here is that **lists don't actually contain objects**, they *reference* objects.  You can prove this by making a list that contains itself.
+            - That notion of containment is a convenient way to think of things, but it's not like containment in the real world.  It's more like a lookup list.
           </aside>
         </section>
 
@@ -579,14 +635,17 @@ True</span>
 True</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO objects are distinct from the variables that point to them
-            - when we talk about whether variables can be changed, we're talking about scope
-            - but when we talk about whether objects can be changed we're talking about mutability
-            - "Changing" a variable means which object the variable points to... the only way to do that is with an assignment
-            - "Changing" an object means mutating an object that one or more variables probably point to
+            - Let's look at this another way...
+            - When we assign to `row2`, nothing gets copied.  We're just referencing the same object from two names.
+            - Mutating one of these lists, mutates the other... because they're stored in the same place in memory.  They are **the same** list.
+            - Objects are distinct from the variables that point to them
+            - "Changing" a variable means changing which object the variable points to... the only way to do that is through assignment
+            - "Changing" an object means mutating an object that any number of variables might point to
             - Variables in Python are *not* bucket that contain objects.  That analogy doesn't hold up in Python.
             - Python's variables are pointers that refer to the memory location that objects live at.
-            - TODO Ned's talk on variables and values and Brandon's talk with buckets and strings off the edge of a cliff
+            - When we talk about whether variables can be changed, we're talking about scope
+            - But when we talk about whether objects can be changed we're talking about mutability
+            - That word change is loaded because variables and objects are separate things
           </aside>
         </section>
 
@@ -598,12 +657,11 @@ True</span>
             <li class="fragment">Assigning to a variable changes what object it points to</li>
             <li class="fragment">Mutating an object changes the object itself</li>
             <li class="fragment">Lists and dictionaries don't "contain" objects, they contain references (pointers) to objects</li>
+            <li class="fragment">Watch <a href="https://www.youtube.com/watch?v=_AEJHKGk9ns">Facts and Myths about Python names and values</a></li>
+            <li class="fragment">Watch <a href="https://pyvideo.org/pyohio-2011/pyohio-2011-names-objects-and-plummeting-from.html">Names, Objects, and Plummeting From The Cliff</a></li>
           </ul>
           <aside class="notes" data-markdown>
             - TODO
-            - `==` is much more commonly used and much more widely useful than `is`
-            - rely on equality over identity most of the time
-            - if you find yourself using `is` when you shouldn't, your code may have very hard to catch bugs
           </aside>
         </section>
 
@@ -612,6 +670,9 @@ True</span>
 
         <section>
           <h2>Intriguing In-Place Additions</h2>
+          <aside class="notes" data-markdown>
+            - Let's talk a little bit more about `+=`
+          </aside>
         </section>
 
         <section>
@@ -679,7 +740,7 @@ TypeError: can only concatenate tuple (not "list") to tuple</span>
           <pre class="python"><code data-trim data-noescape>
 >>> <span class="fragment">x = ([1], [4])
 >>> </span><span class="fragment">x[0].append(2)</span><span class="fragment">
->>> </span>x<span class="fragment">
+>>> </span><span class="fragment">x
 ([1, 2], [4])
 >>> </span><span class="fragment">y = x[0]
 >>> </span><span class="fragment">y.append(3)
@@ -689,7 +750,7 @@ TypeError: can only concatenate tuple (not "list") to tuple</span>
 ([1, 2, 3], [4])</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO
+            - TODO show this oddity in mutability section and then show the += oddity in this section
           </aside>
         </section>
 
@@ -729,30 +790,17 @@ TypeError: 'tuple' object does not support item assignment</span>
           </aside>
         </section>
 
+        <!--
         <section>
           <pre class="python"><code data-trim data-noescape>
->>> a = [1, 2]
->>> a.extend([3, 4])
->>> a += [5, 6]
->>> a[len(a):] = [7, 8]
->>> a
-[1, 2, 3, 4, 5, 6, 7, 8]
-          </code></pre>
-          <aside class="notes" data-markdown>
-            - TODO
-          </aside>
-        </section>
-
-        <section>
-          <pre class="python"><code data-trim data-noescape>
->>> NUMBERS = [1, 2, 3]
->>> class MyFavoriteClass:
+>>> <span class="fragment">NUMBERS = [1, 2, 3]
+>>> </span><span class="fragment">class MyFavoriteClass:
 ...     NUMBERS += [4, 5, 6]
-...
->>> MyFavoriteClass.NUMBERS
+...</span><span class="fragment">
+>>> </span><span class="fragment">MyFavoriteClass.NUMBERS
 [1, 2, 3, 4, 5, 6]
->>> NUMBERS
-[1, 2, 3, 4, 5, 6]
+>>> </span><span class="fragment">NUMBERS
+</span><span class="fragment">[1, 2, 3, 4, 5, 6]</span>
           </code></pre>
           <aside class="notes" data-markdown>
             - TODO
@@ -761,15 +809,29 @@ TypeError: 'tuple' object does not support item assignment</span>
 
         <section>
           <pre class="python"><code data-trim data-noescape>
->>> VOWELS = "aeiou"
->>> class B:
+>>> <span class="fragment">VOWELS = "aeiou"
+>>> </span><span class="fragment">class B:
 ...     VOWELS += "y"
-...
->>> VOWELS
-'aeiou'
->>> B.VOWELS
+...</span><span class="fragment">
+>>> </span><span class="fragment">B.VOWELS
 'aeiouy'
+>>> </span><span class="fragment">VOWELS
+'aeiou'</span>
           </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO
+          </aside>
+        </section>
+        -->
+
+        <section>
+          <h2>Takeaways</h2>
+          <ul>
+            <li class="fragment">In-place addition (<code>+=</code>) and other augmented assignment operations perform assignments</li>
+            <li class="fragment">In-place addition calls the <code>__iadd__</code> method which allows the object to mutate itself if it chooses to do so</li>
+            <li class="fragment">Python's choice about what makes for consistent behavior may differ from your own assumptions</li>
+            <li class="fragment">Class scope is a little magical</li>
+          </ul>
           <aside class="notes" data-markdown>
             - TODO
           </aside>
@@ -784,131 +846,68 @@ TypeError: 'tuple' object does not support item assignment</span>
 
         <section>
           <pre class="python"><code data-trim data-noescape>
->>> 'Python' in 'Python' in 'Python'
+>>> <span class="fragment">'Python' in 'Python' in 'Python'
+</span><span class="fragment">True
+>>> </span><span class="fragment">'Python' in 'Python'
 True
->>> 'Python' in 'Python'
-True
->>> True in 'Python'
+>>> </span><span class="fragment">True in 'Python'
 Traceback (most recent call last):
   File "&lt;stdin>", line 1, in &lt;module>
 TypeError: 'in &lt;string>' requires string as left operand, not bool
->>> ('Python' in 'Python') in 'Python'
+>>> </span><span class="fragment">'Python' in 'Python' in 'Python'
+True
+>>> </span><span class="fragment">('Python' in 'Python') in 'Python'
 Traceback (most recent call last):
   File "&lt;stdin>", line 1, in &lt;module>
 TypeError: 'in &lt;string>' requires string as left operand, not bool
->>> 'Python' in 'Python' in 'Python'
+>>> </span><span class="fragment">'Python' in ['Python'] in [['Python']]
 True
->>> 'Python' in ['Python'] in [['Python']]
-True
->>> x = 25
+>>> </span><span class="fragment">x = 25
 >>> 10 &lt; x &lt; 20
-False
+False</span>
           </code></pre>
           <aside class="notes" data-markdown>
             - TODO chained comparisons can actually be really handy
           </aside>
         </section>
 
-      </section>
-      <section>
-
+        <!--
         <section>
           <h2>Star Silliness</h2>
         </section>
 
         <section>
           <pre class="no-highlight"><code class="hljs" data-trim data-noescape>
->>> numbers = range(3)
->>> *nums1 = numbers
+>>> <span class="fragment">numbers = range(3)
+>>> </span><span class="fragment">*nums1 = numbers</span><span class="fragment">
+Traceback (most recent call last):
   File "&lt;stdin>", line 1
 SyntaxError: starred assignment target must be in a list or tuple
->>> *nums2, = numbers
->>> nums2
+>>> </span><span class="fragment">*nums2, = numbers</span><span class="fragment">
+>>> </span><span class="fragment">nums2
 [0, 1, 2]
->>> [*nums3] = numbers
->>> nums3
-[0, 1, 2]
->>> nums4 = *numbers
+>>> </span><span class="fragment">[*nums3] = numbers</span><span class="fragment">
+>>> </span><span class="fragment">nums3
+[0, 1, 2]</span><span class="fragment">
+>>> </span><span class="fragment">nums4 = *numbers</span><span class="fragment">
+Traceback (most recent call last):
   File "&lt;stdin>", line 1
 SyntaxError: can't use starred expression here
->>> nums5 = [*numbers]
->>> nums5
-[0, 1, 2]
->>> nums6 = *numbers,
->>> nums6
-(0, 1, 2)
+>>> </span><span class="fragment">nums5 = [*numbers]</span><span class="fragment">
+>>> </span><span class="fragment">nums5
+[0, 1, 2]</span><span class="fragment">
+>>> </span><span class="fragment">nums6 = *numbers,</span><span class="fragment">
+>>> </span><span class="fragment">nums6
+(0, 1, 2)</span>
           </code></pre>
           <aside class="notes" data-markdown>
             - TODO Python 3.5 added a lot of new generalizations for star expressions.  You should play with them.  The examples I showed here are silly, but these can actually be really useful.
           </aside>
         </section>
-
-      </section>
-      <section>
-
-        <section>
-          <h2>String Stuff</h2>
-        </section>
-
-        <section>
-          <pre class="python"><code data-trim data-noescape>
->>> """multiline
-... strings"""
-'multiline\nstrings'
->>> """""strings with
-... five quotes around them!"""""
-'""strings with\nfive quotes around them!'
->>> """""strings with five
-... quotes around them!"""""
-'""strings with five\nquotes around them!'
-          </code></pre>
-          <aside class="notes" data-markdown>
-            - TODO implicit string concatenation: just say no
-            - you'll get mixed opinions on implicit string concatenation, but I really think you should avoid it
-          </aside>
-        </section>
+        -->
 
         <section>
           <h2>Miscellaneous Mishaps</h2>
-        </section>
-
-        <section>
-          <pre class="python"><code data-trim data-noescape>
->>> nums = reversed([1, 2, 3, 4])
->>> 2 in nums
-True
->>> 2 in nums
-False
-          </code></pre>
-          <aside class="notes" data-markdown>
-            - TODO I explain this one in my Loop Better talk that I presented at PyGotham last year
-          </aside>
-        </section>
-
-        <section>
-          <pre class="python"><code data-trim data-noescape>
->>> i, x = 0, [1, 2]
->>> i, x[i] = 1, 4
->>> x
-[1, 4]
-          </code></pre>
-          <aside class="notes" data-markdown>
-            - TODO
-          </aside>
-        </section>
-
-        <section>
-          <pre class="python"><code data-trim data-noescape>
->>> x = {'a': 1, 'b': 2}
->>> y = {}
->>> for k, y[k] in x.items(): pass
-...
->>> y
-{'a': 1, 'b': 2}
-          </code></pre>
-          <aside class="notes" data-markdown>
-            - TODO
-          </aside>
         </section>
 
         <section>
@@ -927,7 +926,21 @@ False
 Ellipsis
           </code></pre>
           <aside class="notes" data-markdown>
+            - TODO show this oddity in the mutabilty section (a list can contain itself)... oh also you might be wondering whether that ellipsis means something.  We could try to execute this as code... at we don't get an error.  I'm not going to explain what's going on here outside of saying that Python has a special ellipsis variable and that first ellipsis has nothing to do with the second one
             - TODO Python 3.5 added a lot of new generalizations for star expressions.  You should play with them.  The examples I showed here are silly, but these can actually be really useful.
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> nums = reversed([1, 2, 3, 4])
+>>> 2 in nums
+True
+>>> 2 in nums
+False
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - TODO I explain this one in my Loop Better talk that I presented at PyGotham last year
           </aside>
         </section>
 
@@ -936,24 +949,7 @@ Ellipsis
       <section>
 
         <section>
-          <h2>TODO</h2>
-          <ul>
-            <li class="fragment">TODO</li>
-          </ul>
-          <aside class="notes" data-markdown>
-            - TODO
-          </aside>
-        </section>
-
-        <section>
-          <pre class="python"><code data-trim data-noescape>
-  from todo import Todo
-
-  <span class="fragment" data-fragment-index=1><span class="fragment bold-current" data-fragment-index=4>class SomeClass(Todo)</span>:
-      <span class="fragment bold-current" data-fragment-index=5>x: float <span class="fragment current-visible" data-fragment-index=6>= 0</span>
-      y: float <span class="fragment current-visible" data-fragment-index=6>= 0</span>
-      z: float <span class="fragment current-visible" data-fragment-index=6>= 0</span><span class="fragment" data-fragment-index=7></span></span></span>
-          </code></pre>
+          <h1>#pythonoddity</h1>
           <aside class="notes" data-markdown>
             - TODO
           </aside>
