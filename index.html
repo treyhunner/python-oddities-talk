@@ -39,8 +39,8 @@
 
         <!--
 
+          - Make sure >>> is hidden in cases where there's something to be revealed
           - not too much on identity: maybe explain identity vs equality to setup mutability
-          - remove class scope oddities
           - remove [0] * 3 oddities
           - a += b is not always the same as a = a + b... but sometimes it is!
           - List can contain itself
@@ -112,10 +112,10 @@
           </code></pre>
           <aside class="notes" data-markdown>
             - Let's say we have two lists, `a` and `b`.
-            - They have the same items, so if we ask whether a is equal to be, we'll see that this is True
-            - If we ask whether a **is** b, we'll see that that's False
-            - The first question is asking about equality between `a` and `b`
-            - The second question is asking about identity: we're asking whether `a` and `b` are exactly the same object in memory.  Which they aren't.
+            - They have the same items, so if we ask whether a is equal to be **(click)**, we'll see that this is True **(click)**
+            - If we ask whether a **is** b **(click)**, we'll see that that's False **(click)**
+            - The first question is asking about equality **(click)** between `a` and `b`
+            - The second question is asking about identity **(click)**: we're asking whether `a` and `b` are exactly the same object in memory.  Which they aren't.
           </aside>
         </section>
 
@@ -136,9 +136,9 @@ True
 True</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - The question `a is b` is asking whether the memory location of each these two objects is the same, which it's not in this case
-            - If we assign the variable `c` to the variable `a`, we'll see that `c` and `a` now point to the same object in memory, which means they're not just equal: they're also identical
-            - This will come up again later when we talk about mutability
+            - The question **(click)** `a is b` is asking whether the memory location of each these two objects is the same, **(click)** which it's not in this case
+            - If we assign the variable `c` **(click)** to the variable `a`, we'll see that `c` and `a` now point to the same object in memory, **(click)** which means they're not just equal **(click)**: they're also identical **(click)**
+            - If this is a little tricky to wrap your head around, don't worry because it'll come up again when we talk about mutability later
           </aside>
         </section>
 
@@ -157,12 +157,12 @@ True</span>
           </code></pre>
           <aside class="notes" data-markdown>
             - Let's take two variables and assign them each to the same number.
-            - `x` is `999` and so is `y`
-            - Does `x` equal `y`? *(pause)* Yes.
-            - Is `x` identical to `y`? *(pause)* No, they're not identical.  Python stores these two objects separately.
-            - Somewhat strangely... if `x` and `y` are both `4`, and we ask the same question... we'll see that this time `x` and `y` *are* identical
+            - `x` is `999` **(click)** and so is `y` **(click)**
+            - Does `x` equal `y`? **(click)** *(pause)* Yes. **(click)**
+            - Is `x` identical to `y`? **(click)** *(pause)* No **(click)**, they're not identical.  Python stores these two objects separately.
+            - Somewhat strangely... if `x` **(click)** and `y` **(click)** are both `4`, and we ask the same question **(click)**... we'll see that this time `x` and `y` *are* identical **(click)**
             - What's going on here?
-            - *(pause)8
+            - *(pause)*
             - So Python treats some numbers differently than others...
             - Some numbers will always be identical to the same number in Python
           </aside>
@@ -224,8 +224,8 @@ print(*same_numbers, sep=", ")
 </span><span class="fragment">False</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - If we have two fairly short strings that are equal to each other, and we ask whether they're identical, Python will tell us that they are
-            - But if we have longer strings that are also equal to each other, and we ask whether they're identical, Python will tell us that they aren't
+            - If we have two fairly short strings **(click)** that are equal to each other, and we ask whether they're identical **(click)**, Python will tell us that they are **(click)**
+            - But if we have longer strings **(click)** that are also equal to each other, and we ask whether they're identical **(click)**, Python will tell us that they aren't **(click)**
             - This isn't quite as straightforward as the integer optimization we just saw though
           </aside>
         </section>
@@ -244,11 +244,10 @@ print(*same_numbers, sep=", ")
 True</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - Because if we take those long strings, and we slice them to get short ones again
-            - And then we ask whether those short strings are identical, we'll see that they aren't
-            - But they represent the same characters
-            - And they are equal to each other
-            - So it might seem like identity is sometimes the same as equality, but you can't rely on that.  This identity trick is an optimization that CPython does with integers and strings only.  You shouldn't rely on it.
+            - Because if we take those long strings, and we slice them **(click)** to get short ones again
+            - And then we ask whether those short strings are identical **(click)**, we'll see that they aren't **(click)**
+            - Despite the fact that they represent the same characters **(click)**
+            - And they are equal to each other **(click)**
           </aside>
         </section>
 
@@ -256,9 +255,9 @@ True</span>
           <h3>So... should you ever use the <code>is</code> operator?</h3>
           <h4 class="fragment">Yes, when you care about identity, not just equality</h4>
           <aside class="notes" data-markdown>
-            - So at this point you might be thinking, the `is` operator seems like it's not actually very useful
-            - But it *is* useful, it's just not as commonly useful as `==`
-            - The `is` operator is useful whenever you actually *care* whether two objects are identical... the same exact object in memory... and not just equal to each other
+            - So at after these oddities, you might be thinking, the `is` operator seems like it's not actually very useful and might be misleading to use
+            - But `is` *is* useful, it's just not as commonly useful as `==`
+            - The `is` operator is useful **(click)** whenever you actually *care* whether two objects are identical... the same exact object in memory... and not just equal to each other
           </aside>
         </section>
 
@@ -276,10 +275,11 @@ def from_node(node):
     return iter(iterable) is iterable</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - It's common to use `is` for comparisons with singletons like `None` and `True` because they'll always be identical to each other
-            - That's probably the most common use of the `is` operator in Python
-            - Relying on identity is useful whenever you want to know when you've encountered the exact same object as another one
-            - For example here we're checking whether an object is an iterator by seeing whether its iterator is identical to itself
+            - PEP8, the official Python style guide, recommends using the `is` operator for comparisons with singletons **(click)** like `None` and `True` because they'll always be identical to each other
+            - That's probably the most common use of the `is` operator in Python, but there are *other* uses
+            - Relying on identity is useful if you want to know whether you're looking at two *different* objects or just *one* object with multiple names
+            - For example **(click)** here we're checking whether an object is an iterator by seeing whether its iterator is identical to itself
+            - So...
           </aside>
         </section>
 
@@ -293,11 +293,12 @@ def from_node(node):
             <li class="fragment">Checking for identity when you need equality causes bugs</li>
           </ul>
           <aside class="notes" data-markdown>
-            - Equality and identity are not the same thing
-            - The `==` operator is much more commonly useful than the `is` operator
-            - If you're wondering whether you want equality or identity, most of the time you want equality
-            - Python includes some optimizations that involve making some strings and numbers identical when the aren't really
-            - So if you find yourself using `is` when you shouldn't, your code may have very hard to catch bugs
+            - The takeaways from these equality and identity oddities are that...
+            - **(click)** Equality and identity are not the same thing
+            - **(click)** The `==` operator is much more commonly useful than the `is` operator
+            - **(click)** If you're wondering whether you want equality or identity, most of the time you want equality
+            - **(click)** Python includes some optimizations that involve making some strings and numbers identical when the aren't really
+            - **(click)** So if you find yourself using `is` when you shouldn't, your code may actually have some very hard to catch bugs
           </aside>
         </section>
 
@@ -313,26 +314,26 @@ def from_node(node):
 
         <section>
           <pre class="python"><code data-trim data-noescape>
->>> <span class="fragment">x = 0
->>> </span><span class="fragment">numbers = [1, 1, 2, 3, 5, 8]
->>> </span><span class="fragment">for x in numbers:
+>>> <span class="fragment" data-fragment-index=1>x = 0
+>>> </span><span class="fragment" data-fragment-index=2>numbers = [1, 1, 2, 3, 5, 8]
+>>> </span><span class="fragment" data-fragment-index=3><span class="fragment bold-current" data-fragment-index=8>for x in numbers</span>:
 ...     y = x**2
 ...
->>> </span><span class="fragment">y</span>
-<span class="fragment">64</span><span class="fragment">
+>>> </span><span class="fragment" data-fragment-index=4>y</span>
+<span class="fragment" data-fragment-index=5>64</span><span class="fragment" data-fragment-index=6>
 >>> x</span>
-<span class="fragment">8</span>
+<span class="fragment" data-fragment-index=7>8</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - Let's say we have a variable `x` that is equal to `0` and a variable `numbers` that points to a list of numbers
-            - If we loop over this list of numbers and assign `y` to the square of each number
-            - What will we see if we access `y` after this loop?
-            - 64!
-            - What will we see if we access `x` now?
-            - 8!
+            - Let's say we have a variable `x` **(click)** that is equal to `0` and a variable `numbers` **(click)** that points to a list of numbers
+            - If we loop **(click)** over this list of numbers and assign `y` to the square of each number
+            - What will we see if we access `y` **(click)** after this loop?
+            - **(click)** 64!
+            - What will we see if we access `x` **(click)** now?
+            - **(click)** 8!
             - Unlike many other programming languages, loops leak their scope in Python
             - Variables defined inside a loop are accessible outside of the loop
-            - And that `for x in numbers` in just an assignment that happens during each iteration of our loop
+            - And that **(click)** `for x in numbers` in actually **an assignment** that happens during each iteration of our loop.  It works the same way as an assignment using an equals sign.
           </aside>
         </section>
 
@@ -345,9 +346,9 @@ def from_node(node):
 <span class="fragment">0</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - If we take those same `x` and `numbers` variables and we make a list comprehension representing the squares of these numbers and we use `x` as our looping variable
-            - What will `x` be after we've executed all this code?
-            - x is actually still 0 here
+            - If we take those same `x` **(click)** and `numbers` **(click)** variables and we make a list comprehension **(click)** representing the squares of these numbers and we use `x` **(click)** as our looping variable
+            - What will `x` **(click)** be after we've executed all this code?
+            - x is actually still 0 here **(click)**
             - ... In Python 3 that is.  In Python 2, list comprehensions used to leaked their scope, but in Python 3, list comprehensions have their own separate scope.
           </aside>
         </section>
@@ -442,6 +443,7 @@ NameError: name 'numbers' is not defined</span>
             - This happens this way because otherwise class scope would leak into the methods that live on your class... and that would be really weird
           </aside>
         </section>
+        -->
 
         <section>
           <pre class="python"><code data-trim data-noescape style="overflow: hidden;">
@@ -456,15 +458,15 @@ Traceback (most recent call last):
 UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - Let's say we have a global variable `NUMBERS`
-            - And we want to add more numbers to our list by using `+=`
-            - What will this do if we call `add_numbers` with the list `[4, 5, 6]`?
+            - Let's say we have a global variable `NUMBERS` **(click)**
+            - And we want to add more numbers to our list by using `+=` **(click)**
+            - What will this do if we call `add_numbers` with the list `[4, 5, 6]`? **(click)**
             - It could modify `NUMBERS`.  It could make a local variable `NUMBERS`.  It could give an error.
-            - The `+=` operator both reads from and assign to the variable on its left-hand side.  So we're trying to read from a global variable and assign to a global variable
+            - It does give us an error **(click)**
+            - The `+=` operator both reads from and assign to the variable on its left-hand side.  So we're trying to both read from a global variable and assign to a global variable
             - Python doesn't like that
           </aside>
         </section>
-        -->
 
         <section>
           <pre class="python"><code data-trim data-noescape style="overflow: hidden;">
@@ -480,7 +482,7 @@ Traceback (most recent call last):
 UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - If we make a function that prints `NUMBERS` and then assigns to it, calling that function will also give us an error
+            - If we make a function **(click)** that prints `NUMBERS` and then assigns to it, calling that function will also give us an error **(click)**
             - Variable names in Python functions cannot be both local and non-local/global in the same scope
             - So we can't read a global variable and then later write to a local variable with the same name.  Python doesn't allow that because that's probably a bug in your code.
           </aside>
@@ -496,28 +498,58 @@ UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
 [1, 2, 3]
           </code></pre>
           <aside class="notes" data-markdown>
-            - We can't read a global variable without writing to it
+            - We're allowed to **read** a global variable *without* writing to it
           </aside>
         </section>
 
         <section>
           <pre class="python"><code data-trim data-noescape style="overflow: hidden;">
-<span class="fragment bold-current" data-fragment-index=5>>>> NUMBERS = [1, 2, 3]</span>
->>> def set_numbers(*numbers):
-...     <span class="fragment bold-current" data-fragment-index=5><span class="fragment bold-current" data-fragment-index=1>NUMBERS = numbers</span></span>
-...     <span class="fragment bold-current" data-fragment-index=2>print(NUMBERS)</span>
+<span class="fragment bold-current" data-fragment-index=6>>>> NUMBERS = [1, 2, 3]</span>
+>>> <span class="fragment" data-fragment-index=1>def set_numbers(*numbers):
+...     <span class="fragment bold-current" data-fragment-index=5>NUMBERS = numbers</span>
+...     <span class="fragment bold-current" data-fragment-index=7>print(NUMBERS)</span>
 ...
->>> set_numbers(<span class="fragment bold-current" data-fragment-index=3>[4, 5, 6]</span>)
-[4, 5, 6]
->>> <span class="fragment bold-current" data-fragment-index=4>NUMBERS
-[1, 2, 3]</span><span class="fragment bold-current" data-fragment-index=6></span>
+>>> </span><span class="fragment" data-fragment-index=2>set_numbers(<span class="fragment bold-current" data-fragment-index=5>[4, 5, 6]</span>)</span>
+<span class="fragment" data-fragment-index=3>[4, 5, 6]
+>>> </span><span class="fragment" data-fragment-index=4><span class="fragment bold-current" data-fragment-index=8>NUMBERS
+[1, 2, 3]</span><span class="fragment bold-current" data-fragment-index=10></span></span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - And we can assign to a local variable (that happens to have the same name as a global) and then print it
-            - but calling this function doesn't change our global `NUMBERS` variable
+            - But if we assign to a variable **(click)**, it's a local variable
+            - So if we call this function **(click)**, it'll print out the list we gave to it **(click)**
+            - But the global variable hasn't changed **(click)**
+            - We can assign to a local variable **(click)**, that happens to have the same name as a global **(click)**, and then print it **(click)**
+            - but calling this function doesn't change our global `NUMBERS` variable **(click)**
             - The global `NUMBERS` variables is shadowed by the local `NUMBERS` variable because it has the same name
             - There *is* a special statement that allows you to change global variables in Python, but I'm not going to show you how to do it because using it is usually a bad idea
             - You should trust Python's variable scope rules.  They tend to be pretty good about both saving you from bugs and pushing you in the direction of storing your variables in the right scope.
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape style="overflow: hidden;">
+>>> NUMBERS = [1, 2, 3]
+>>> <span class="fragment">def add_numbers(*numbers):
+...     NUMBERS.extend(numbers)
+...     print(NUMBERS)
+...
+>>> </span><span class="fragment">add_numbers([4, 5, 6])</span>
+<span class="fragment">[1, 2, 3, 4, 5, 6]
+
+
+</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - If we take our `add_numbers` function and use the `extend` **(click)** method instead of an assignment, is this any different?
+            - What will Python do when we call this function **(click)** this time? *(pause)*  Will it print out 1, 2, 3, 4, 5, 6 or will it give us an error?
+            - This actually works... **(click)**
+            - I said before that we can't change our global `NUMBERS` variable, but it seems kinda like we changed our `NUMBERS` variable here!
+            - You'll see this gotcha come up quite a bit... the word "change" is ambiguous
+            - When I say we can't change `NUMBERS`, I meant that we can't *assign* to `NUMBERS`
+            - Assigning to numbers changes the object that the global variable `NUMBERS` points to and that's not allowed unless we're in the same scope as `NUMBERS`
+            - But we're not assigning to `NUMBERS`, we're mutating it.
+            - We *are* allowed to mutate any object that we can get our hands on though, so long as it's mutable
+            - So we're only allowed to assign to local variables, but we can mutate any object as long as it's not immutable.
           </aside>
         </section>
 
@@ -527,11 +559,15 @@ UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
             <li class="fragment">Reading global variables is perfectly fine</li>
             <li class="fragment">But don't try to assign to them from a local scope</li>
             <li class="fragment">List comprehensions have their own scope</li>
-            <li class="fragment">Classes have their own scope</li>
-            <li class="fragment">Comprehension scope and class scope don't really agree with each other</li>
+            <li class="fragment">Scope matters with assignment, not with mutation</li>
           </ul>
           <aside class="notes" data-markdown>
-            - TODO
+            - So you're allowed to *read* from global variables in Python
+            - But you can only write to local variables: every assignment statement assigns to a *local* variable
+            - There are some escape hatches in the language to get around that, but in general you should assume that assignments only work for local variables
+            - List comprehensions have their own scope
+            - Scope rules are entirely about assignment.  You don't need to worry about scope if you're just mutating an object.  It's when you're assigning that things get weird.
+            - That leads us to our next topic...
           </aside>
         </section>
 
@@ -541,31 +577,41 @@ UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
         <section>
           <h2>Teenage Mutable Ninja Turtles</h2>
           <aside class="notes" data-markdown>
-            - Let's talk about mutability
+            - Mutability: that's changing objects, not variables
           </aside>
         </section>
 
         <section>
-          <pre class="python"><code data-trim data-noescape style="overflow: hidden;">
->>> NUMBERS = [1, 2, 3]
->>> <span class="fragment">def add_numbers(*numbers):
-...     print(NUMBERS)
-...     NUMBERS.extend(numbers)
-...
->>> </span><span class="fragment">add_numbers([4, 5, 6])</span>
-<span class="fragment">[1, 2, 3, 4, 5, 6]</span>
+          <pre class="python"><code data-trim data-noescape>
+>>> <span class="fragment">numbers = [1, 2, 3]
+>>> </span><span class="fragment">numbers2 = numbers
+>>> </span><span class="fragment">numbers2.append(4)
+>>> </span><span class="fragment">numbers2
+[1, 2, 3, 4]
+>>> </span><span class="fragment">numbers
+</span><span class="fragment">[1, 2, 3, 4]
+>>> </span><span class="fragment">id(numbers)
+139670455619848
+>>> id(numbers2)
+139670455619848
+>>> </span><span class="fragment">numbers is numbers2
+True</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - If we take our `add_numbers` function and use the `extend` method instead of an assignment, is this any different?
-            - What will Python do when we call this function this time?
-            - This actually works...
-            - I said before that we can't change our global `NUMBERS` variable, but it seems kinda like we changed our `NUMBERS` variable here!
-            - You'll see this gotcha come up quite a bit... the word "change" is ambiguous
-            - When I say we can't change `NUMBERS`, I meant that we can't *assign* to `NUMBERS`
-            - Assigning to numbers changes the object that the global variable `NUMBERS` points to and that's not allowed unless we're in the same scope as `NUMBERS`
-            - But we're not assigning to `NUMBERS`, we're mutating it.
-            - We *are* allowed to mutate any object that we can get our hands on though, so long as it's mutable
-            - So we're only allowed to assign to local variables, but we can mutate any object as long as it's not immutable.
+            - Let's say we have a list of `numbers`
+            - And we assign `numbers2` to `numbers`
+            - If we append to `numbers2`, how many elements will `numbers2` contain now?
+            - `numbers2` has 4 things in it
+            - How many things does `numbers` have?
+            - `numbers` *also* has 4 things
+            - We're referencing *the same object* with *two* different names
+            - Mutating one of these lists, mutates the other... because they're **the same** list
+            - **Objects** are *distinct* from the **variables** that point to them
+            - "Changing" a *variable* means changing **which object** the variable points to... the only way to do that is through assignment
+            - And nothing gets copied during an assignment, we're just giving another name to an object
+            - "Changing" an *object* means **mutating** the object itself.  And any number of variables might be pointing to that object that you're changing.
+            - Variables in Python are **not buckets** that contain objects
+            - Python's variables are pointers that refer to the memory location that objects live at
           </aside>
         </section>
 
@@ -581,15 +627,14 @@ UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
 </span><span class="fragment">[[0, 1, 0], [0, 1, 0], [0, 1, 0]]</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO remove the multiplication oddities or show them as an after thought
-            - What will this give us?
-            - This gives us a list of three zeros.  We're allowed to multiply lists by numbers in Python, the same way we can multiple strings by numbers (which I think I did earlier)
-            - What will this give us? *(pause)*
-            - This gives us a list of three lists, each with three zeroes in them.
-            - So this `matrix` variable now points to a list of lists of numbers
-            - When we assign `matrix[1][1]` to the number `1`
-            - What will change in `matrix`?
-            - This actually changes the middle number in all three of the inner lists
+            - What will this give us? **(click)**
+            - This gives us a list of three zeros. **(click)**  We're allowed to multiply lists by numbers in Python, the same way we can multiple strings by numbers (which I think I did earlier)
+            - What will this give us? **(click)** *(pause)*
+            - This gives us a list of three lists **(click)**, each with three zeroes in them.
+            - So this **(click)** `matrix` variable now points to a list of lists of numbers
+            - When we assign `matrix[1][1]` to the number `1` **(click)**
+            - What will change in `matrix`? **(click)**
+            - This actually changes the middle number in all three of the inner lists **(click)**
             - Let's take a look at what's going on here... with a little aside
           </aside>
         </section>
@@ -605,7 +650,9 @@ UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
 >>> </span><span class="fragment">matrix
 [[0, 1, 0], [0, 1, 0], [0, 1, 0]]
 >>> </span><span class="fragment">matrix[0] is matrix[1] is row
-True</span>
+True
+>>> </span><span class="fragment">matrix = [row] * 3
+</span>
           </code></pre>
           <aside class="notes" data-markdown>
             - If we have a list of zeroes that we assign to the `row` variable, and we make a new list that contains that `row` variable three times
@@ -613,39 +660,52 @@ True</span>
             - If we modify that `row` list, and we look at our `matrix` afterward, we'll see that all of our matrix rows have been modified.  We modified one list that was stored in that list three times.
             - Likewise, if we modify any one of those row lists by indexing them, it'll modify all three rows
             - All of these things are identical.  They all refer to exactly the same object in memory.
-            - The important takeaway here is that **lists don't actually contain objects**, they *reference* objects.  You can prove this by making a list that contains itself.
-            - That notion of containment is a convenient way to think of things, but it's not like containment in the real world.  It's more like a lookup list.
+            - TODO [row] * 3 is the same as [row, row, row]
           </aside>
         </section>
 
         <section>
           <pre class="python"><code data-trim data-noescape>
->>> <span class="fragment">row = [0, 0, 0]
->>> </span><span class="fragment">row2 = row
->>> </span><span class="fragment">row2[1] = 1
->>> </span><span class="fragment">row2
-[0, 1, 0]
->>> </span><span class="fragment">row
-[0, 1, 0]
->>> </span><span class="fragment">id(row)
-139670455619848
->>> id(row2)
-139670455619848
->>> </span><span class="fragment">row is row2
-True</span>
+>>> x = []
+>>> <span class="fragment">x.append(x)
+</span><span class="fragment">>>> <span class="fragment">x
+[[...]]
+>>> </span><span class="fragment">[[...]]</span><span class="fragment">
+[[Ellipsis]]</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - Let's look at this another way...
-            - When we assign to `row2`, nothing gets copied.  We're just referencing the same object from two names.
-            - Mutating one of these lists, mutates the other... because they're stored in the same place in memory.  They are **the same** list.
-            - Objects are distinct from the variables that point to them
-            - "Changing" a variable means changing which object the variable points to... the only way to do that is through assignment
-            - "Changing" an object means mutating an object that any number of variables might point to
-            - Variables in Python are *not* bucket that contain objects.  That analogy doesn't hold up in Python.
-            - Python's variables are pointers that refer to the memory location that objects live at.
-            - When we talk about whether variables can be changed, we're talking about scope
-            - But when we talk about whether objects can be changed we're talking about mutability
-            - That word change is loaded because variables and objects are separate things
+            - The important takeaway here is that **lists don't actually contain objects**, they *reference* objects.  You can prove this by making a list that contains itself **(click)**
+            - Python allows us to put lists inside themselves because lists don't actually contain objects, they just contain pointers to objects **(click)**
+            - That notion of **containment** is a *convenient* way to think of things, but it's not like containment in the real world.  It's more like a lookup table.  Variables tell you where to go to locate the object.
+            - By the way, **(click)** if you type a couple lists with three dots in them, that's, *somewhat strangely*, valid Python code **(click)**
+            - I'm not going to explain what's going on here outside of saying that Python has a special ellipsis variable and that first ellipsis has nothing to do with the second one
+            - Alright moving quickly past that oddity...
+          </aside>
+        </section>
+
+        <section>
+          <pre class="python"><code data-trim data-noescape>
+>>> <span class="fragment">x = ([1], [4])</span><span class="fragment">
+>>> </span><span class="fragment">x[0].append(2)</span><span class="fragment">
+>>> </span><span class="fragment">x
+([1, 2], [4])
+>>> </span><span class="fragment">y = x[0]
+>>> </span><span class="fragment">y.append(3)
+>>> </span><span class="fragment">x[0]
+[1, 2, 3]
+>>> </span><span class="fragment">x
+([1, 2, 3], [4])</span>
+          </code></pre>
+          <aside class="notes" data-markdown>
+            - If we make a **(click)** tuple of lists, will Python allow this?  Is that valid?
+            - It is! **(click)**  Python allows us to put lists inside of tuples
+            - What if call the **(click)** `append` method on the first list in this tuple?  Will Python allow that?
+            - It will!  **(click)**  Python doesn't give an error here.
+            - This tuple now has a list in it that has two items, but it only one item in it before
+            - Tuples in Python are **immutable**, meaning we cannot change them.  And we haven't changed this tuple... at least not from Python's perspective.
+            - If we assign this list to a variable `y` **(click)** and we append to `y` **(click)**, we'll change `y` and we'll change **(click)** the original list, because they point to the same object  **(click)**
+            - Assignment doesn't copy objects, it just gives another name to them
+            - Adding something to a tuple, a list, or a dictionary also doesn't copy anything.  These data structures don't store objects, they store **references** to objects.
           </aside>
         </section>
 
@@ -661,7 +721,14 @@ True</span>
             <li class="fragment">Watch <a href="https://pyvideo.org/pyohio-2011/pyohio-2011-names-objects-and-plummeting-from.html">Names, Objects, and Plummeting From The Cliff</a></li>
           </ul>
           <aside class="notes" data-markdown>
-            - TODO
+            - Variables in Python aren't buckets that contain things **(click)**: they're pointers that reference objects **(click)** by giving them another name
+            - Changing variables means changing pointers **(click)**
+            - Changing objects means mutating them, but not doing an assignment **(click)**
+            - When we talk about whether variables can be changed, we're talking about scope
+            - But when we talk about whether objects can be changed we're talking about mutability
+            - That word change is loaded because variables and objects are separate things
+            - The same rules apply to data structures as variables **(click)**: lists, tuples, and dictionaries don't contain objects, they contain pointers
+            - If you feel rusty on this topic, there's two talks I'd recommend watching... TODO
           </aside>
         </section>
 
@@ -692,7 +759,7 @@ True</span>
         <section>
           <pre class="python"><code data-trim data-noescape>
 >>> <span class="fragment">a = b = (1, 2)
->>> </span><span class="fragment">a += (3, 4)
+>>> </span><span class="fragment">a += (3, 4)</span><span class="fragment">
 >>> </span><span class="fragment">a
 </span><span class="fragment">(1, 2, 3, 4)
 >>> </span><span class="fragment">b
@@ -704,6 +771,7 @@ True</span>
           </aside>
         </section>
 
+        <!--
         <section>
           <pre class="python"><code data-trim data-noescape>
 >>> <span class="fragment">x = [1, 2]
@@ -735,24 +803,7 @@ TypeError: can only concatenate tuple (not "list") to tuple</span>
             - TODO lists are the odd one here
           </aside>
         </section>
-
-        <section>
-          <pre class="python"><code data-trim data-noescape>
->>> <span class="fragment">x = ([1], [4])
->>> </span><span class="fragment">x[0].append(2)</span><span class="fragment">
->>> </span><span class="fragment">x
-([1, 2], [4])
->>> </span><span class="fragment">y = x[0]
->>> </span><span class="fragment">y.append(3)
->>> </span><span class="fragment">x[0]
-[1, 2, 3]
->>> </span><span class="fragment">x
-([1, 2, 3], [4])</span>
-          </code></pre>
-          <aside class="notes" data-markdown>
-            - TODO show this oddity in mutability section and then show the += oddity in this section
-          </aside>
-        </section>
+        -->
 
         <section>
           <pre class="python"><code data-trim data-noescape>
@@ -912,27 +963,6 @@ SyntaxError: can't use starred expression here
 
         <section>
           <pre class="python"><code data-trim data-noescape>
->>> x = []
->>> x.append(x)
->>> x
-[[...]]
->>> repr(x)
-'[[...]]'
->>> eval(repr(x))
-[[Ellipsis]]
->>> [[...]]
-[[Ellipsis]]
->>> ...
-Ellipsis
-          </code></pre>
-          <aside class="notes" data-markdown>
-            - TODO show this oddity in the mutabilty section (a list can contain itself)... oh also you might be wondering whether that ellipsis means something.  We could try to execute this as code... at we don't get an error.  I'm not going to explain what's going on here outside of saying that Python has a special ellipsis variable and that first ellipsis has nothing to do with the second one
-            - TODO Python 3.5 added a lot of new generalizations for star expressions.  You should play with them.  The examples I showed here are silly, but these can actually be really useful.
-          </aside>
-        </section>
-
-        <section>
-          <pre class="python"><code data-trim data-noescape>
 >>> nums = reversed([1, 2, 3, 4])
 >>> 2 in nums
 True
@@ -952,6 +982,21 @@ False
           <h1>#pythonoddity</h1>
           <aside class="notes" data-markdown>
             - TODO
+          </aside>
+        </section>
+
+        <section>
+          <h2>Closing thoughts</h2>
+          <ul>
+            <li class="fragment">Understanding how variables, mutability, and data structures work is important</li>
+            <li class="fragment">If it looks like a bug, it might just be a misunderstanding</li>
+            <li class="fragment">Found something odd? Try to learn from it!</li>
+          </ul>
+          <aside class="notes" data-markdown>
+            - Regardless of what programming language you're in, it's important to understand how the fundamentals of your programming language is different: how do function calls work, how variables work, and do objects works?
+            - And if you think you found a bug in Python, it might just be that you're misunderstanding what trade offs the Python code developers had to make when they chose the particular functionality that you're seeing
+            - So if you see something odd going on, *before* you fix your code, poke around and see whether you can learn from it
+            - breaking things is one of the best ways to learn
           </aside>
         </section>
 
@@ -975,8 +1020,7 @@ False
           <a href="http://pythonmorsels.com"><img src="python-morsels-logo.svg" class="no-style logo"></a>
           </p>
           <aside class="notes" data-markdown>
-            - I'd love to help you improve your Python skills
-            - Find me in the halls or at my booth if you'd like to chat about that later
+            - If you're interested in improving your Python skills, send me an email
             - Thank you!
           </aside>
         </section>
