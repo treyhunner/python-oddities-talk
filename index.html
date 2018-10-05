@@ -439,11 +439,12 @@ TypeError: 'tuple' object does not support item assignment
 ([1, 2, 3, 4],)</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - Let's take a tuple with a list inside it.  We've already seen that we can store lists inside of tuples.  And we also know we can mutate lists that are inside tuples.
+            - Let's take a tuple with a list inside it. **(click)**
+            - We've already seen that we can store lists inside of tuples.  And we also know we can mutate lists that are inside tuples.
             - So what will happen if we say **(click)** `x[0] += [3, 4]`
             - Will it mutate the list?  Or will it give us an error?
             - *(pause)* It gives us an error **(click)**
-            - *And* it mutates the list **(click)**
+            - ...*And* it mutates the list **(click)**
             - So everyone's happy!
             - *(pause)*  This is a very obscure quirk of the way Python does `+=` and it's never going to bite you in real code, but let's take a look at what's going on
           </aside>
@@ -469,8 +470,8 @@ TypeError: 'tuple' object does not support item assignment</span>
             - Whenever we use `+=` **(click)**, Python will try to call **(click)** `\_\_iadd\_\_` on the object that we're pointing to, in this case it's a list 
             - After that, it will **(click)** do an assignment
             - So the exception **(click)** happened because the assignment failed
-            - But this happened *after* `\_\_iadd\_\_` **(click)** successfully changed our list
-            - The *list* `\_\_iadd\_\_` method, **(click)** mutates our list and returns itself back *to us* for the sake of that assignment statement
+            - But this happened *after* `\_\_iadd\_\_` **(click)** successfully mutated our list
+            - The *list* `\_\_iadd\_\_` method, **(click)** mutates our list and *returns itself back* for the sake of that assignment statement
             - But we're **(click)** not allowed to assign into tuples, so we get an error at this point
             - So this won't bite you because you're never going to use `+=` to mutate a list inside of a tuple and expect anything good to happen... but it's an interesting excuse to learn about `\_\_iadd\_\_`
           </aside>
@@ -488,7 +489,7 @@ TypeError: 'tuple' object does not support item assignment</span>
             - **(click)** The `+=` operator *always* performs an assignment
             - But `+=` and the other augmented assignment operators **(click)** are also *allowed* to mutate the object they're called with... if the object *chooses* to mutate itself
             - Lists mutate themselves with `+=` but tuples don't.  This might seem inconsistent, but consistency is about your frame of reference.
-            - According to the Python documentation, in-place additions are **(click)** supposed to their operation in-place whenever possible and lists just happen to be the most common data structure where that's possible
+            - According to the Python documentation, in-place additions are **(click)** supposed to do their operation in-place whenever possible and lists just happen to be the most common data structure where it is possible
             - If Python doesn't do what you expect it to, that doesn't necessarily mean that there's a *bug* in Python
             - When your assumptions of what Python is doing don't match up with what it's *actually* doing, it could mean there's a bug in Python, or it could mean that you don't yet understand what Python is actually doing
           </aside>
@@ -507,7 +508,7 @@ TypeError: 'tuple' object does not support item assignment</span>
           </ul>
           <aside class="notes" data-markdown>
             - So I'd like to leave you with some closing thoughts
-            - Regardless of what programming language you're in, **(click)** it's important to understand how the fundamentals of your programming language is different: how do function calls work, how variables work, and do objects works?
+            - Regardless of what programming language you're in, **(click)** it's important to understand how the fundamentals of your programming language are different from other languages: how do function calls work, how do variables work, and how do objects work?
             - And if you think you found a bug in Python, **(click)** it might just be that you're misunderstanding what trade offs the Python code developers had to make when they chose the particular functionality that you're seeing
             - So if you see something odd going on, *before* you fix your code, **(click)** poke around and see whether you can learn from it
             - breaking things is one of *the best* ways to learn
@@ -756,7 +757,11 @@ NameError: name 'numbers' is not defined</span>
 'aeiou'</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO
+            - Let's take a global variable, `VOWELS` **(click)**
+            - and inside our class say `VOWELS += "y"`: what will this *do*? **(click)**
+            - *(pause)* This actually works **(click)**
+            - `B.VOWELS` is `'aeiouy'` now **(click)**
+            - And `VOWELS` is just `'aeiou'` **(click)**
           </aside>
         </section>
 
@@ -772,7 +777,12 @@ NameError: name 'numbers' is not defined</span>
 </span><span class="fragment">[1, 2, 3, 4, 5, 6]</span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - TODO
+            - Let's take a global variable, `NUMBERS` **(click)**
+            - and inside our class say `NUMBERS += [4, 5, 6]` **(click)**
+            - This also works **(click)**
+            - `MyFavoriteClass.NUMBERS` is `1, 2, 3, 4, 5, 6` now **(click)**
+            - And so is `NUMBERS` **(click)**
+            - This is a combination oddity: this is `+=` combining with the strangeness of class scope
           </aside>
         </section>
 
@@ -826,12 +836,12 @@ True
 </span>
           </code></pre>
           <aside class="notes" data-markdown>
-            - If we have a list of zeroes that we assign to the `row` variable, and we make a new list that contains that `row` variable three times
+            - If we have a list of zeroes **(click)** that we assign to the `row` variable, and we make a new list **(click)** that contains that `row` variable three times
             - We'll have made a list that contains the same exact list three times
-            - If we modify that `row` list, and we look at our `matrix` afterward, we'll see that all of our matrix rows have been modified.  We modified one list that was stored in that list three times.
-            - Likewise, if we modify any one of those row lists by indexing them, it'll modify all three rows
-            - All of these things are identical.  They all refer to exactly the same object in memory.
-            - TODO [row] * 3 is the same as [row, row, row]
+            - If we modify that `row` list **(click)**, and we look at our `matrix` afterward **(click)**, we'll see that all of our matrix rows have been modified. **(click)**  We modified one list that was stored in that list three times.
+            - Likewise, if we modify any one of those row lists by indexing them **(click)**, it'll modify all three rows **(click)**
+            - All of these things are identical.  **(click)**  They all refer to exactly the same object in memory.
+            - That list of three `row` variables above is the *same* as when we said `[row] * 3` before **(click)**
           </aside>
         </section>
 
