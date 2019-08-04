@@ -335,9 +335,7 @@ True</span>
 >>> x = []
 >>> <span class="fragment">x.append(x)
 </span><span class="fragment">>>> <span class="fragment">x
-[[...]]
->>> </span><span class="fragment">[[...]]</span><span class="fragment">
-[[Ellipsis]]</span>
+[[...]]</span>
           </code></pre>
           <aside class="notes" data-markdown>
             - What will happen if we make a new list, and then try to append that list to itself? **(click)**  Will Python allow this?
@@ -346,10 +344,6 @@ True</span>
             - Python allows this because lists don't contain objects: they contain pointers to objects
             - In Python, we can't use the analogy of variables and data structures being buckets with objects inside them
             - Lists are not buckets which contain objects: instead, they're lookup tables which reference the memory locations of objects.
-            - *(pause)*
-            - By the way, if we copy-paste the string representation of this recursive list of lists **(click)**, that happens to be valid Python code **(click)**
-            - This has nothing to do with what we're talking about.  I just put in on this slide to our collective confusion level.  **(click)**
-            - So...
           </aside>
         </section>
 
