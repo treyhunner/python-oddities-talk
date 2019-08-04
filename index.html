@@ -565,20 +565,31 @@ TypeError: can only concatenate tuple (not "list") to tuple</span>
 
         <section>
           <h2>Duck Typing</h2>
+          <aside class="notes" data-markdown>
+            - The idea behind duck typing is...
+            - if we need to identifying whether something is a duck, we don't check its DNA, ...
+            - instead we say **(click)** "if it looks like a duck, and quacks like a duck...
+          </aside>
+        </section>
+
+        <section data-background="bin-chicken.jpg">
+          <aside class="notes" data-markdown>
+            - it's a duck.
+          </aside>
+        </section>
+
+        <section>
+          <h2>Duck Typing</h2>
           <ul>
-            <li class="fragment">If it looks like a duck and quacks like a duck, it's a duck</li>
+            <li>If it looks like a duck and quacks like a duck, it's a duck</li>
             <li class="fragment">Don't type check: rely on specific behaviors instead</li>
             <li class="fragment">"Iterable" and "callable" describe behaviors (not types)</li>
           </ul>
           <aside class="notes" data-markdown>
-            - The idea behind duck typing is...
-            - if we need to identifying whether something is a duck, we don't check its DNA, ...
-            - instead we say **(click)** "if it looks like a duck, and quacks like a duck, it's a duck"
-            - In Python that translates to **(click)** checking the behavior of an object instead of checking what's actual *class* is
+            - that means **(click)** checking the behavior of an object instead of checking what its actual *class* is
             - So we don't usually care whether something is a list: we care whether it's a sequence or maybe whether it's an iterable **(click)**
             - And we don't care whether something is a function: we care whether it's a callable
-            - We tend to use a lot of generic words for describing *behaviors* of objects instead of discussing the *types* of those objects
-            - This mentality is encouraged by Python because it's kind of built-in to Python
+            - We tend to use a generic words for describing *behaviors* of objects instead of discussing the *types* of those objects
           </aside>
         </section>
 
