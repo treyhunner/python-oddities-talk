@@ -58,11 +58,10 @@
           <h3 class="fragment"><q>That's odd.  What's going on here?</q></h3>
           <aside class="notes" data-markdown>
             - And when I'm doing on-site trainings, I often get to see **(click)** some very weird code because my students are *playing* with Python
-            - Which is lovely because *playing* as a *wonderful* way to learn
+            - Which is lovely because *playing* is a *wonderful* way to learn
             - Sometimes though... while I'm trying to explain what Python's doing, I realize that... **(click)** I don't really understand what Python's doing, at least not well enough to explain it
-            - So this talk was inspired by all the people who asked me weird questions while I was at your company teaching over the last few years.
-            - Those questions made me a better programmer, a better teacher, and they gave me pretty much all the material for this talk.
-            - So thanks to everyone who inspired this.
+            - So this talk was inspired by all the people who asked me weird and confusing questions while I was at your company teaching Python
+            - Thank you for... your confusion
           </aside>
         </section>
 
@@ -118,7 +117,7 @@
 >>> </span><span class="fragment">numbers = [1, 1, 2, 3, 5, 8]
 >>> </span><span class="fragment">squares = [x**2 for x in numbers]
 >>> </span><span class="fragment">x</span>
-<span class="fragment">0</span><span class="fragment">  # In Python 2 this was 64</span>
+<span class="fragment">0</span><span class="fragment">  # In Python 2 this was 8</span>
           </code></pre>
           <aside class="notes" data-markdown>
             - If we take those same `x` **(click)** and `numbers` **(click)** variables and we make a list comprehension **(click)** representing the squares of these numbers and we use `x` **(click)** as our looping variable
@@ -235,7 +234,7 @@ UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
           <aside class="notes" data-markdown>
             - So what if instead of doing an assignment in `add_numbers`, we  use the `extend` **(click)** method, is this any different?
             - What will Python do when we call this function **(click)** this time? *(pause)*  Will it print out 1, 2, 3, 4, 5, 6 or will it give us an error?
-            - This actually prints out what we're looking... **(click)**
+            - This actually prints out what we're looking... **(click)**  *(pause)*
             - And that global `NUMBERS` list changes also **(click)**
             - Python doesn't like it when we change global variables and it seems like this breaks that rule, but it *doesn't*
             - The tricky thing here is that there's two very different ways to *change* things in Python: *assignment* changes **variables**, but *mutation* changes **objects**
@@ -348,9 +347,9 @@ True</span>
             - In Python, we can't use the analogy of variables and data structures being buckets with objects inside them
             - Lists are not buckets which contain objects: instead, they're lookup tables which reference the memory locations of objects.
             - *(pause)*
-            - An unrelated aside: this **(click)** happens to be valid Python code **(click)**
-            - I'm not going to explain what that's doing.  You can look that one up later.
-            - Moving on...
+            - By the way, if we copy-paste the string representation of this recursive list of lists **(click)**, that happens to be valid Python code **(click)**
+            - This has nothing to do with what we're talking about.  I just put in on this slide to our collective confusion level.  **(click)**
+            - So...
           </aside>
         </section>
 
@@ -476,7 +475,7 @@ True</span>
         <section>
           <h2>Devious Ducks</h2>
           <aside class="notes" data-markdown>
-            - The last thing we're going to talk about, is ducks
+            - Let's talk about ducks
           </aside>
         </section>
 
@@ -520,7 +519,6 @@ TypeError: can only concatenate tuple (not "list") to tuple</span>
             - The error is that we can't use `+=` on a tuple with anything **(click)** that *isn't* a tuple **(click)**
             - `+=` on tuples only works with other tuples
             - *(pause)*
-            - This behavior isn't *unique* to tuples... tuples aren't the odd one here, lists are.
             - Tuples aren't actually the odd one here: lists are
           </aside>
         </section>
@@ -529,10 +527,10 @@ TypeError: can only concatenate tuple (not "list") to tuple</span>
           <pre class="python"><code data-trim data-noescape>
 >>><span class="fragment"> things = []
 >>> </span><span class="fragment">things += "duck"</span><span class="fragment">
->>> </span><span class="fragment">x
+>>> </span><span class="fragment">things
 ['d', 'u', 'c', 'k']
->>> </span><span class="fragment">x.extend(' quack')
->>> </span><span class="fragment">x
+>>> </span><span class="fragment">things.extend(' quack')
+>>> </span><span class="fragment">things
 ['d', 'u', 'c', 'k', ' ', 'q', 'u', 'a', 'c', 'k']</span>
           </code></pre>
           <aside class="notes" data-markdown>
@@ -593,7 +591,7 @@ TypeError: can only concatenate tuple (not "list") to tuple</span>
         <section>
           <h2>Takeaways</h2>
           <ul>
-            <li class="fragment">The list <code>extend</code> method accepts any iterable of strings</li>
+            <li class="fragment">The list <code>extend</code> method accepts any iterable</li>
             <li class="fragment">The list <code>+=</code> operator also accepts any iterable of strings</li>
             <li class="fragment">The tuple <code>+=</code> operator only accepts another tuple</li>
             <li class="fragment">Python thinks in terms of <em>behaviors</em>, not <em>types</em></li>
@@ -601,13 +599,40 @@ TypeError: can only concatenate tuple (not "list") to tuple</span>
             <li class="fragment">More on iterables: <a href="https://youtu.be/JYuE8ZiDPl4">Loop Better: a deeper look at iteration</a></li>
           </ul>
           <aside class="notes" data-markdown>
-            - The list `extend` method on lists **(click)** accepts any iterable
+            - The list `extend` method **(click)** accepts any iterable
             - and the `+=` operator works the same way as the `extend` method... **(click)** on lists that is
             - `+=` works differently on tuples **(click)**... and most other types in fact
             - In many cases, Python doesn't do type-checking but instead just tries an operation out and hopes for the best **(click)**
-            - If we embrace duck typing, **(click)** by thinking in terms of behaviors (iterable) instead of types (list), you'll better understand what Python is doing, but you'll also probably write better code
+            - If you embrace duck typing, **(click)** by thinking in terms of behaviors (iterable) instead of types (list), you'll better understand what Python is doing, but you'll also probably write better code
             - So familiarize yourself with terms **(click)** like iterable, callable, hashable, sequence, and mapping
             - And if you're interested in how iterables work specifically, you can check out a talk I gave at PyCon AU two years ago **(click)**, called Loop Better
+          </aside>
+        </section>
+
+        <section>
+          <aside class="notes" data-markdown>
+            - Okay we're going to take a quick mental break before our last section
+            - So here's....
+          </aside>
+        </section>
+
+        <section data-background="dog-in-a-mailbox.jpg">
+          <aside class="notes" data-markdown>
+            - a dog in a mailbox,
+          </aside>
+        </section>
+
+        <section data-background="chipmunk-cup.jpg">
+          <aside class="notes" data-markdown>
+            - a chipmunk drinking tea,
+          </aside>
+        </section>
+
+        <section data-background="cat-with-ducks.jpg">
+          <aside class="notes" data-markdown>
+            - And a cat debugging its code
+            - *(pause)*
+            - Okay that's enough break
           </aside>
         </section>
 
@@ -618,7 +643,7 @@ TypeError: can only concatenate tuple (not "list") to tuple</span>
         <section>
           <h2>Intriguing In-Place Additions</h2>
           <aside class="notes" data-markdown>
-            - Before we wrap up, let's take another look at that `+=` operator
+            - Now let's look at that `+=` operator again
           </aside>
         </section>
 
@@ -644,7 +669,7 @@ TypeError: can only concatenate tuple (not "list") to tuple</span>
             - `b` still has two elements.  **(click)**
             - So += on tuples is the same as a `+` followed by an `=` **(click)**
             - We're not mutating the tuple, we're just making a new tuple and reassigning our variable to it
-            - **(click)** `a += something` is *the same* as `a = a + something` **(click)**
+            - **(click)** `x += something` is *the same* as `x = x + something` **(click)**
             - Both of these statements make a *new* object and then point our `a` variable to it
           </aside>
         </section>
