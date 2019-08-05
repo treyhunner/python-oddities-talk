@@ -73,6 +73,7 @@
             - If this talk was a *Python 2* oddities talk, it would be longer and much more amusing
             - If you're interested, free to **(click)** ask me about Python 2 oddities later
             - Alright... let's get started
+            - Just a quick warning: this is going to be very fast
           </aside>
         </section>
 
@@ -130,7 +131,7 @@
         <section data-transition="slide-in fade-out">
           <pre class="python"><code data-trim data-noescape style="overflow: hidden;">
 >>> <span class="fragment">NUMBERS = [1, 2, 3]
->>> </span><span class="fragment">def add_numbers(*nums):
+>>> </span><span class="fragment">def add_numbers(nums):
 ...     NUMBERS += nums
 ...
 >>> </span><span class="fragment">add_numbers([4, 5, 6])</span><span class="fragment">
@@ -155,7 +156,7 @@ UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
         <section data-transition="fade-in slide-out">
           <pre class="python"><code data-trim data-noescape style="overflow: hidden;">
 >>> NUMBERS = [1, 2, 3]
->>> def add_numbers(*nums):
+>>> def add_numbers(nums):
 ...     <span class="fragment bold-current">NUMBERS = NUMBERS + nums</span>
 ...
 >>> add_numbers([4, 5, 6])<span class="fragment">
@@ -176,7 +177,7 @@ UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
         <section>
           <pre class="python"><code data-trim data-noescape style="overflow: hidden;">
 >>> NUMBERS = [1, 2, 3]
->>> <span class="fragment">def set_numbers(*nums):
+>>> <span class="fragment">def set_numbers(nums):
 ...     print(NUMBERS)
 ...     NUMBERS = nums
 ...</span><span class="fragment">
@@ -201,7 +202,7 @@ UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
         <section>
           <pre class="python"><code data-trim data-noescape style="overflow: hidden;">
 >>> NUMBERS = [1, 2, 3]
->>> def set_numbers(*nums):
+>>> def set_numbers(nums):
 ...     <span class="fragment bold-current" data-fragment-index=5>NUMBERS = nums</span>
 ...     print(NUMBERS)
 ...
@@ -222,7 +223,7 @@ UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
         <section>
           <pre class="python"><code data-trim data-noescape style="overflow: hidden;">
 >>> NUMBERS = [1, 2, 3]
->>> <span class="fragment">def add_numbers(*nums):
+>>> <span class="fragment">def add_numbers(nums):
 ...     NUMBERS.extend(nums)
 ...     print(NUMBERS)
 ...
