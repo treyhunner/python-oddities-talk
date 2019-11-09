@@ -130,6 +130,9 @@
       <button type="submit" class="btn btn-lg btn-success mt-3">
         Sign up for Python Morsels <span class="d-none d-md-inline">to grow your Python skills every week »</span>
       </button>
+      <p>
+      <br>You can <a href="https://www.pythonmorsels.com/privacy/">find the Privacy Policy here</a>.<br>
+      </p>
     </form>
 
     <footer class="pt-3 my-4 border-top">
@@ -148,6 +151,27 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfP0cEUAAAAAAlbI-d5M7xLioNYWX0LDj78gN2b"></script>
+    <script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute('6LfP0cEUAAAAAAlbI-d5M7xLioNYWX0LDj78gN2b', {action: 'visit'}).then(function(token) {
+        });
+    });
+    $(document).ready(function () {
+      $('form[action="https://www.pythonmorsels.com/accounts/signup/"]').submit(function(event) {
+        event.preventDefault();
+        var $form = $(this);
+        grecaptcha.ready(function() {
+          grecaptcha.execute('6LfP0cEUAAAAAAlbI-d5M7xLioNYWX0LDj78gN2b', {action: 'signup'}).then(function(token) {
+            $form.prepend('<input type="hidden" name="captcha_action" value="signup">');
+            $form.prepend('<input type="hidden" name="captcha_token" value="' + token + '">');
+            $form.off('submit').submit().on('submit');
+          });
+        });
+      });
+    });
+    </script>
 
   </body>
 </html>
