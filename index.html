@@ -47,8 +47,8 @@
           <aside class="notes" data-markdown>
             - My name is Trey
             - And I help folks level-up their Python skills
-            - One of the ways I do that is with a Python skill-building service **(click)** that I run called Python Morsels.  Through that, I send out 1 Python exercise every week.
-            - The other thing I spend my time on is team training, **(click)** through my company, Truthful Technology.  I do on-site trainings for teams to help experienced programmers become experienced *Python* programmers
+            - Through on-site and remote Python training for teams
+            - And with Python Morsels, which helps experienced programmers develop a habit of deepening your Python skills **every single week**
           </aside>
         </section>
 
@@ -57,11 +57,10 @@
           <h3 class="fragment">My students show me very interesting code</h3>
           <h3 class="fragment"><q>That's odd.  What's going on here?</q></h3>
           <aside class="notes" data-markdown>
-            - And when I'm doing on-site trainings, I often get to see **(click)** some very weird code because my students are *playing* with Python
+            - So when I do team trainings, I often get to see **(click)** some very weird code because my students are *playing* with Python
             - Which is lovely because *playing* is a *wonderful* way to learn
             - Sometimes though... while I'm trying to explain what Python's doing, I realize that... **(click)** I don't really understand what Python's doing, at least not well enough to explain it
-            - So this talk was inspired by all the people who asked me weird and confusing questions while I was at your company teaching Python
-            - Thank you for... your confusion
+            - So this talk was inspired by all the individuals who asked me weird and confusing questions while I was holding a Python workshop at your company
           </aside>
         </section>
 
@@ -69,11 +68,12 @@
           <h2>This talk supports Python 3 only</h2>
           <h3 class="fragment">Ask me what oddities Python 2 has</h3>
           <aside class="notes" data-markdown>
+            **[2 minutes]**
+
             - This is a Python 3 only talk
-            - If this talk was a *Python 2* oddities talk, it would be longer and much more amusing
-            - If you're interested, free to **(click)** ask me about Python 2 oddities later
+            - If this was a *Python 2* oddities talk, it would be much longer and much more amusing
+            - Feel free to **(click)** ask me about Python 2 oddities later
             - Alright... let's get started
-            - Just a quick warning: this is going to be very fast
           </aside>
         </section>
 
@@ -84,7 +84,7 @@
         <section>
           <h2>Scope Scares</h2>
           <aside class="notes" data-markdown>
-            - First we're going to talk about variables
+            - First let's talk about variables
           </aside>
         </section>
 
@@ -116,7 +116,7 @@
           <pre class="python"><code data-trim data-noescape>
 >>> <span class="fragment">x = 0
 >>> </span><span class="fragment">numbers = [1, 1, 2, 3, 5, 8]
->>> </span><span class="fragment">squares = [x**2 for x in numbers]
+>>> </span><span class="fragment">squares = [x**2 for <span class="fragment bold-current">x</span> in numbers]
 >>> </span><span class="fragment">x</span>
 <span class="fragment">0</span><span class="fragment">  # In Python 2 this was 8</span>
           </code></pre>
@@ -253,6 +253,8 @@ UnboundLocalError: local variable 'NUMBERS' referenced before assignment</span>
             <li class="fragment">Scope matters with assignment, not with mutation</li>
           </ul>
           <aside class="notes" data-markdown>
+            **[9 minutes]**
+
             - So you're allowed to ***(click)** *read* from global variables in Python
             - But you can only ***(click)** *write* to local variables: every assignment statement assigns to a *local* variable
             - There are some escape hatches in Python to get around that limitation, but you shouldn't use them
@@ -382,18 +384,22 @@ True</span>
             <li class="fragment">Variables are names that point to objects</li>
             <li class="fragment">Assigning to a variable changes what object it points to</li>
             <li class="fragment">Mutating an object changes the object itself</li>
+            <li class="fragment">Read <a href="https://www.pythonmorsels.com/pointers/">Overlooked facts about variables and objects in Python: it's all about pointers</a></li>
             <li class="fragment">Watch <a href="https://www.youtube.com/watch?v=_AEJHKGk9ns">Facts and Myths about Python names and values</a></li>
             <li class="fragment">Watch <a href="https://pyvideo.org/pyohio-2011/pyohio-2011-names-objects-and-plummeting-from.html">Names, Objects, and Plummeting From The Cliff</a></li>
           </ul>
           <aside class="notes" data-markdown>
+            **[13 minutes]**
+
             - Data structures, (lists, dictionaries, tuples), **(click)** they don't contain objects, the contain references to objects
             - Variables also don't contain objects **(click)**, they just point to objects **(click)**
             - Which means **change** is an ambiguous word in Python:
               - **(click)** an assignment changes a variable, but that doesn't change objects or create objects
               - **(click)** mutating an *object* changes the object, regardless of what variables or data structures might be referencing it
-            - If you feel rusty on this topic, there's two talks I'd recommend watching...
-              - Facts and Myths about Python names values by Ned Batchelder
-              - And Names, Objects, and Plummeting From The Cliff by Brandon Rhodes
+            - If you feel rusty on this topic, I wrote an article on on this recently **(click)**
+            - And I also have two talks to recommend on this as well:
+              - **(click)** Facts and Myths about Python names values by Ned Batchelder
+              - **(click)** And Names, Objects, and Plummeting From The Cliff by Brandon Rhodes
             - *(pause)* Alright...
           </aside>
         </section>
@@ -567,13 +573,15 @@ TypeError: can only concatenate tuple (not "list") to tuple</span>
         <section>
           <h2>Duck Typing</h2>
           <aside class="notes" data-markdown>
+            **[16 minutes]**
+
             - The idea behind duck typing is...
             - if we need to identifying whether something is a duck, we don't check its DNA, ...
             - instead we say **(click)** "if it looks like a duck, and quacks like a duck...
           </aside>
         </section>
 
-        <section data-background="bin-chicken.jpg">
+        <section data-background="possibly-a-duck.gif">
           <aside class="notes" data-markdown>
             - it's a duck.
           </aside>
@@ -649,6 +657,8 @@ TypeError: can only concatenate tuple (not "list") to tuple</span>
         <section>
           <h2>Intriguing In-Place Additions</h2>
           <aside class="notes" data-markdown>
+            **[19 minutes]**
+
             - Now let's look at that `+=` operator again
           </aside>
         </section>
@@ -799,6 +809,8 @@ TypeError: 'tuple' object does not support item assignment</span>
             <li class="fragment">In-place addition do the addition "in-place" whenever possible</li>
           </ul>
           <aside class="notes" data-markdown>
+            **[24 minutes]**
+
             - So some takeways here...
             - **(click)** The `+=` operator *always* performs an assignment
             - But `+=` and the other augmented assignment operators **(click)** are also *allowed* to mutate the object they're called with... if the object *chooses* to mutate itself
